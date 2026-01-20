@@ -1,60 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>FarmConnecta</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Connecting farmers, markets, jobs, services, logistics and capital across Africa">
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header { background: #1f7a4d; color: white; padding: 60px 20px; text-align: center; }
-    section { padding: 40px 20px; max-width: 1000px; margin: auto; }
-    h2 { color: #1f7a4d; }
-    footer { background: #f4f4f4; text-align: center; padding: 20px; }
-    .cta { background: #1f7a4d; color: white; padding: 15px 25px; text-decoration: none; display: inline-block; margin-top: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmConnecta - Africa's Digital Agriculture Ecosystem</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f7fdee; /* Light, natural background */
+        }
+        .section-bg {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* Large rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+        .main-button {
+            transition: all 0.2s;
+        }
+        .main-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #14532d;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #dcfce7;
+        }
+    </style>
+
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, query, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase and App context
+        window.initializeApp = initializeApp;
+        window.getAuth = getAuth;
+        window.signInAnonymously = signInAnonymously;
+        window.signInWithCustomToken = signInWithCustomToken;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.getFirestore = getFirestore;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.onSnapshot = onSnapshot;
+        window.collection = collection;
+        window.query = query;
+        window.limit = limit;
+        window.getDocs = getDocs;
+        window.setPersistence = setPersistence;
+        window.browserSessionPersistence = browserSessionPersistence;
+        window.setLogLevel = setLogLevel;
+    </script>
 </head>
-<body>
+<body class="text-gray-800">
 
-<header>
-  <h1>FarmConnecta</h1>
-  <p>Connecting farmers, markets, jobs, services, logistics & capital across Africa</p>
-  <a class="cta" href="mailto:tech@farmconnecta.com">Get in Touch</a>
-</header>
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#home" class="flex-shrink-0 flex items-center space-x-2">
+                    <img class="h-8 w-auto" src="https://placehold.co/32x32/14532d/ffffff?text=F" alt="FarmConnecta Logo">
+                    <span class="text-2xl font-bold text-[#14532d] tracking-tight">FarmConnecta</span>
+                </a>
 
-<section>
-  <h2>What is FarmConnecta?</h2>
-  <p>
-    FarmConnecta is a digital agriculture ecosystem designed to bring together farmers,
-    buyers, workers, service providers, logistics partners, investors, and agricultural
-    finance institutions in one unified platform.
-  </p>
-</section>
+                <!-- Desktop Menu -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="#marketplace" class="text-gray-600 hover:text-[#37a44f] inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">Marketplace</a>
+                    <a href="#inputs" class="text-gray-600 hover:text-[#37a44f] inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">Input Store</a>
+                    <a href="#services" class="text-gray-600 hover:text-[#37a44f] inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">Services Hub</a>
+                    <a href="#financing" class="text-gray-600 hover:text-[#37a44f] inline-flex items-center px-1 pt-1 text-sm font-medium transition duration-150">Investment</a>
+                </div>
 
-<section>
-  <h2>Who It’s For</h2>
-  <ul>
-    <li>Farmers & producers</li>
-    <li>Buyers & agribusinesses</li>
-    <li>Workers & job seekers</li>
-    <li>Agronomists & veterinarians</li>
-    <li>Logistics providers</li>
-    <li>Investors & agricultural lenders</li>
-  </ul>
-</section>
+                <!-- Auth Buttons -->
+                <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
+                    <button id="auth-button" class="bg-[#37a44f] text-white px-4 py-2 rounded-xl text-sm font-medium main-button">
+                        Loading...
+                    </button>
+                    <span id="user-id-display" class="text-xs text-gray-500 hidden"></span>
+                </div>
 
-<section>
-  <h2>Our Vision</h2>
-  <p>
-    To build the digital infrastructure that powers inclusive, efficient,
-    and scalable agriculture across Africa.
-  </p>
-</section>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="sm:hidden text-gray-500 hover:text-gray-700 focus:outline-none p-2 rounded-md transition duration-150">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
 
-<footer>
-  <p>© 2026 FarmConnecta</p>
-  <p>Contact: tech@farmconnecta.com</p>
-</footer>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="sm:hidden hidden pb-2 border-t border-gray-100">
+            <a href="#marketplace" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50">Marketplace</a>
+            <a href="#inputs" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50">Input Store</a>
+            <a href="#services" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50">Services Hub</a>
+            <a href="#financing" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50">Investment</a>
+            <div class="px-3 pt-2">
+                <button class="w-full bg-[#37a44f] text-white px-4 py-2 rounded-xl text-base font-medium main-button">
+                    Account
+                </button>
+            </div>
+            <div id="mobile-user-id-display" class="text-center text-xs text-gray-500 mt-2"></div>
+        </div>
+    </nav>
 
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- 1. Hero Section (Home) -->
+        <section id="home" class="section-bg p-8 md:p-16 text-center bg-white border-4 border-[#dcfce7]">
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-[#14532d] leading-tight mb-4">
+                FarmConnecta
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Africa's most trusted digital agriculture ecosystem, empowering farmers and agribusinesses through seamless market access, smart services, and sustainable financial support.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#marketplace" class="main-button bg-[#37a44f] text-white text-lg font-semibold px-8 py-3 rounded-xl hover:bg-[#14532d] transition duration-300">
+                    Explore Marketplace
+                </a>
+                <a href="#inputs" class="main-button bg-transparent border-2 border-[#37a44f] text-[#37a44f] text-lg font-semibold px-8 py-3 rounded-xl hover:bg-[#dcfce7] transition duration-300">
+                    Shop Inputs
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. Value Proposition -->
+        <section class="space-y-10">
+            <h2 class="text-3xl font-bold text-center text-[#14532d]">Value Proposition</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="section-bg p-6 text-center">
+                    <div class="text-[#37a44f] text-4xl mb-4">🌾</div>
+                    <h3 class="text-xl font-semibold mb-2">For Farmers</h3>
+                    <p class="text-sm text-gray-600">Fair prices, reliable input sourcing, professional services on demand, and access to credit.</p>
+                </div>
+                <div class="section-bg p-6 text-center">
+                    <div class="text-[#37a44f] text-4xl mb-4">🛒</div>
+                    <h3 class="text-xl font-semibold mb-2">For Buyers</h3>
+                    <p class="text-sm text-gray-600">Guaranteed supply sources, verified quality, and efficient ordering/logistics coordination.</p>
+                </div>
+                <div class="section-bg p-6 text-center">
+                    <div class="text-[#37a44f] text-4xl mb-4">🛠️</div>
+                    <h3 class="text-xl font-semibold mb-2">For Service Providers</h3>
+                    <p class="text-sm text-gray-600">Digital presence, increased client base, and automated booking/payment systems.</p>
+                </div>
+                <div class="section-bg p-6 text-center">
+                    <div class="text-[#37a44f] text-4xl mb-4">💰</div>
+                    <h3 class="text-xl font-semibold mb-2">For Investors</h3>
+                    <p class="text-sm text-gray-600">Transparent farm project management and reduced risk via escrow-protected transactions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Marketplace Section -->
+        <section id="marketplace" class="pt-10 space-y-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-extrabold text-[#14532d]">Digital Marketplace</h2>
+                <p class="text-xl text-gray-600 mt-2">Connecting farm produce directly to buyers.</p>
+            </div>
+
+            <div id="marketplace-listings" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="section-bg p-6 text-center col-span-full">
+                    <p class="text-gray-500">Loading marketplace listings...</p>
+                    <div id="loading-spinner" class="mt-4 animate-spin h-8 w-8 border-4 border-t-[#37a44f] border-gray-200 rounded-full mx-auto"></div>
+                    <p id="firestore-error" class="text-red-500 mt-2 hidden"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Input Store Section -->
+        <section id="inputs" class="pt-10 space-y-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-extrabold text-[#14532d]">Input Store</h2>
+                <p class="text-xl text-gray-600 mt-2">Access high-quality agricultural inputs from verified shops.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Drug Shops (Veterinary) -->
+                <div class="section-bg p-8 border-t-4 border-blue-500 hover:shadow-lg transition duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl">💊</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Veterinary</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-[#14532d] mb-2">Vet Drug Shops</h3>
+                    <p class="text-gray-600 text-sm mb-6">Verified pharmacies providing vaccines, antibiotics, and nutritional supplements for livestock and poultry.</p>
+                    <ul class="space-y-2 mb-8 text-sm text-gray-700">
+                        <li class="flex items-center">✅ Licensed Pharmacists</li>
+                        <li class="flex items-center">✅ Cold Chain Storage</li>
+                        <li class="flex items-center">✅ Prescription Validation</li>
+                    </ul>
+                    <button class="w-full bg-blue-500 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition">Browse Drug Shops</button>
+                </div>
+
+                <!-- Agrochemical Shops -->
+                <div class="section-bg p-8 border-t-4 border-green-500 hover:shadow-lg transition duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl">🧪</span>
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Agro-Chemicals</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-[#14532d] mb-2">Agrochemical Shops</h3>
+                    <p class="text-gray-600 text-sm mb-6">Certified dealers for fertilizers, pesticides, herbicides, and soil conditioners to boost crop yields.</p>
+                    <ul class="space-y-2 mb-8 text-sm text-gray-700">
+                        <li class="flex items-center">✅ Certified Distributors</li>
+                        <li class="flex items-center">✅ Safety Guidelines Provided</li>
+                        <li class="flex items-center">✅ Authentic Brands Only</li>
+                    </ul>
+                    <button class="w-full bg-green-500 text-white py-3 rounded-xl font-bold hover:bg-green-600 transition">Browse Agro Shops</button>
+                </div>
+
+                <!-- Farm Equipment -->
+                <div class="section-bg p-8 border-t-4 border-orange-500 hover:shadow-lg transition duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl">🚜</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded">Machinery</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-[#14532d] mb-2">Farm Equipment</h3>
+                    <p class="text-gray-600 text-sm mb-6">Purchase or hire tractors, irrigation systems, harvesters, and essential hand tools for efficient farming.</p>
+                    <ul class="space-y-2 mb-8 text-sm text-gray-700">
+                        <li class="flex items-center">✅ Maintenance Support</li>
+                        <li class="flex items-center">✅ Hire/Lease Options</li>
+                        <li class="flex items-center">✅ Modern Tech Solutions</li>
+                    </ul>
+                    <button class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold hover:bg-orange-600 transition">Browse Equipment</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Services Hub Section -->
+        <section id="services" class="pt-10 space-y-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-extrabold text-[#14532d]">Services Hub</h2>
+                <p class="text-xl text-gray-600 mt-2">Professional services for sustainable agribusiness.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="section-bg p-6 text-center">
+                    <div class="text-4xl text-[#37a44f] mb-3">🩺</div>
+                    <h3 class="text-xl font-semibold mb-2">Veterinary Care</h3>
+                    <p class="text-sm text-gray-600">Verified Vets for consultation, farm visits, and disease diagnosis.</p>
+                    <button class="mt-4 text-sm text-[#37a44f] font-medium hover:underline">Book Now</button>
+                </div>
+                <div class="section-bg p-6 text-center">
+                    <div class="text-4xl text-[#37a44f] mb-3">👷</div>
+                    <h3 class="text-xl font-semibold mb-2">Labor Marketplace</h3>
+                    <p class="text-sm text-gray-600">Find reliable farm workers, temporary or contract labor, quickly.</p>
+                    <button class="mt-4 text-sm text-[#37a44f] font-medium hover:underline">Hire Talent</button>
+                </div>
+                <div class="section-bg p-6 text-center">
+                    <div class="text-4xl text-[#37a44f] mb-3">🧠</div>
+                    <h3 class="text-xl font-semibold mb-2">Advisory & Extension</h3>
+                    <p class="text-sm text-gray-600">Get expert advice on crops, soil management, and farm efficiency.</p>
+                    <button class="mt-4 text-sm text-[#37a44f] font-medium hover:underline">Consult Expert</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Investment & Financing Section -->
+        <section id="financing" class="pt-10 space-y-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-extrabold text-[#14532d]">Investment & Financial Inclusion</h2>
+                <p class="text-xl text-gray-600 mt-2">Connecting growth-ready farmers with investors.</p>
+            </div>
+            <div class="section-bg p-8 md:p-12 text-center bg-[#dcfce7]">
+                <h3 class="text-2xl font-bold text-[#14532d] mb-4">Invest in Sustainable Agriculture</h3>
+                <p class="text-lg text-gray-700 mb-6 max-w-3xl mx-auto">
+                    FarmConnecta secures all transactions using a mandatory escrow system, providing peace of mind to both investors and farmers. Track your impact in real-time.
+                </p>
+                <div class="flex justify-center flex-wrap gap-4">
+                    <a href="#" class="main-button bg-[#14532d] text-white text-base font-semibold px-6 py-3 rounded-xl hover:bg-[#37a44f] transition duration-300">
+                        View Farm Projects
+                    </a>
+                    <a href="#" class="main-button bg-white border-2 border-[#14532d] text-[#14532d] text-base font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition duration-300">
+                        Apply for Financing
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#14532d] mt-20 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white text-center">
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8 mb-6">
+                <a href="#home" class="hover:text-[#37a44f] transition duration-200">Home</a>
+                <a href="#marketplace" class="hover:text-[#37a44f] transition duration-200">Marketplace</a>
+                <a href="#inputs" class="hover:text-[#37a44f] transition duration-200">Input Store</a>
+                <a href="#services" class="hover:text-[#37a44f] transition duration-200">Services</a>
+                <a href="#financing" class="hover:text-[#37a44f] transition duration-200">Financing</a>
+            </div>
+            <p class="text-sm text-gray-400">&copy; 2025 FarmConnecta. All rights reserved. Built for a sustainable African future.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for App Logic -->
+    <script type="module">
+        const {
+            initializeApp, getAuth, signInAnonymously, signInWithCustomToken,
+            onAuthStateChanged, getFirestore, collection, query, limit,
+            getDocs, setLogLevel, doc, setDoc, getDoc, setPersistence, browserSessionPersistence
+        } = window;
+
+        setLogLevel('Debug');
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const authToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        let userId = null;
+        let isAuthReady = false;
+
+        const marketplaceListingsEl = document.getElementById('marketplace-listings');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const firestoreErrorEl = document.getElementById('firestore-error');
+        const authButton = document.getElementById('auth-button');
+        const userIdDisplay = document.getElementById('user-id-display');
+        const mobileUserIdDisplay = document.getElementById('mobile-user-id-display');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const withExponentialBackoff = async (fn, maxRetries = 5, delay = 1000) => {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    return await fn();
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay * (2 ** i)));
+                }
+            }
+        };
+
+        const initFirebase = async () => {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                await setPersistence(auth, browserSessionPersistence);
+                
+                let authPromise;
+                if (authToken) {
+                    authPromise = withExponentialBackoff(() => signInWithCustomToken(auth, authToken));
+                } else {
+                    authPromise = withExponentialBackoff(() => signInAnonymously(auth));
+                }
+                
+                await authPromise;
+                
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        authButton.textContent = 'Account Dashboard';
+                        userIdDisplay.textContent = `User ID: ${userId}`;
+                        mobileUserIdDisplay.textContent = `User ID: ${userId}`;
+                        userIdDisplay.classList.remove('hidden');
+                    } else {
+                        userId = null;
+                        authButton.textContent = 'Login / Register';
+                        userIdDisplay.classList.add('hidden');
+                    }
+                    isAuthReady = true;
+                    fetchListings();
+                });
+
+            } catch (error) {
+                console.error("Firebase error:", error);
+                firestoreErrorEl.textContent = `Error: ${error.message}`;
+                firestoreErrorEl.classList.remove('hidden');
+                loadingSpinner.classList.add('hidden');
+            }
+        };
+
+        const mockListings = [
+            { id: '1', name: 'Premium Maize (500KG)', price: '20,000 NGN', category: 'Crops', location: 'Ogun State', icon: '🌽' },
+            { id: '2', name: 'Poultry Feed (Grower)', price: '8,500 NGN', category: 'Inputs', location: 'Lagos', icon: '🐔' },
+            { id: '3', name: 'Friesian Bull', price: '450,000 NGN', category: 'Livestock', location: 'Kaduna Farms', icon: '🐄' },
+            { id: '4', name: 'Organic Fertilizer', price: '4,500 NGN / bag', category: 'Inputs', location: 'Ibadan', icon: '🌱' },
+        ];
+
+        const generateListingCard = (listing) => `
+            <div class="section-bg p-6 flex flex-col items-center text-center hover:shadow-xl transition duration-300">
+                <div class="text-5xl mb-4">${listing.icon}</div>
+                <h3 class="text-xl font-bold text-[#14532d]">${listing.name}</h3>
+                <p class="text-lg font-semibold text-[#37a44f] mt-1">${listing.price}</p>
+                <p class="text-sm text-gray-500">${listing.location} (${listing.category})</p>
+                <button class="main-button bg-[#37a44f] text-white px-4 py-2 mt-4 rounded-xl text-sm hover:bg-[#14532d]">
+                    View Details
+                </button>
+            </div>
+        `;
+
+        const fetchListings = async () => {
+            if (!isAuthReady || !db) return;
+            loadingSpinner.classList.remove('hidden');
+            const publicCollectionPath = `artifacts/${appId}/public/data/farmconnecta_listings`;
+            const listingsCollection = collection(db, publicCollectionPath);
+
+            try {
+                const q = query(listingsCollection, limit(1));
+                const snapshot = await withExponentialBackoff(() => getDocs(q));
+
+                if (snapshot.empty) {
+                    for (const listing of mockListings) {
+                        const docRef = doc(listingsCollection);
+                        await withExponentialBackoff(() => setDoc(docRef, listing));
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    const newSnapshot = await withExponentialBackoff(() => getDocs(listingsCollection));
+                    renderListings(newSnapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+                } else {
+                    const allSnapshot = await withExponentialBackoff(() => getDocs(listingsCollection));
+                    renderListings(allSnapshot.docs.map(d => ({ id: d.id, ...d.data() })));
+                }
+            } catch (error) {
+                console.error("Firestore operation failed:", error);
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        };
+
+        const renderListings = (listings) => {
+            marketplaceListingsEl.innerHTML = listings.length === 0 ? 
+                '<p class="col-span-full text-center text-gray-500">No current listings found.</p>' : 
+                listings.map(generateListingCard).join('');
+        }
+
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        window.onload = initFirebase;
+    </script>
 </body>
 </html>
