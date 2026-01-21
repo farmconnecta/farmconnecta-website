@@ -1,291 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FarmConnecta - Africa's Digital Agriculture Ecosystem</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter font -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            background-color: #f7fdee; 
-        }
-        .section-bg {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-        }
-        .main-button {
-            transition: all 0.2s;
-        }
-        .main-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #14532d;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #dcfce7;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmConnecta - Africa's Digital Agriculture Ecosystem</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f7fdee; 
+        }
+        .section-bg {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+        .main-button {
+            transition: all 0.2s;
+        }
+        .main-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #14532d;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #dcfce7;
+        }
+    </style>
 
-    <!-- Firebase SDK Imports -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, query, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, collection, query, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global access for logic script
-        window.fb = { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, doc, setDoc, collection, query, limit, getDocs, setPersistence, browserSessionPersistence };
-    </script>
+        // Global access for logic script
+        window.fb = { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, doc, setDoc, collection, query, limit, getDocs, setPersistence, browserSessionPersistence };
+    </script>
 </head>
 <body class="text-gray-800">
 
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="#home" class="flex-shrink-0 flex items-center space-x-2">
-                    <div class="bg-[#14532d] p-1.5 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2 2 2 0 012 2v.657M7 20h11a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <span class="text-2xl font-bold text-[#14532d] tracking-tight">FarmConnecta</span>
-                </a>
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#home" class="flex-shrink-0 flex items-center space-x-2">
+                    <div class="bg-[#14532d] p-1.5 rounded-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2 2 2 0 012 2v.657M7 20h11a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <span class="text-2xl font-bold text-[#14532d] tracking-tight">FarmConnecta</span>
+                </a>
 
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#marketplace" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Marketplace</a>
-                    <a href="#inputs" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Input Store</a>
-                    <a href="#services" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Services</a>
-                    <a href="#financing" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Invest</a>
-                    <button id="auth-button" class="bg-[#37a44f] text-white px-5 py-2.5 rounded-xl text-sm font-bold main-button">
-                        Account
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#marketplace" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Marketplace</a>
+                    <a href="#inputs" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Input Store</a>
+                    <a href="#services" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Services</a>
+                    <a href="#financing" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Invest</a>
+                    <button id="auth-button" class="bg-[#37a44f] text-white px-5 py-2.5 rounded-xl text-sm font-bold main-button">
+                        Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
 
-        <!-- Hero Section -->
-        <section id="home" class="relative overflow-hidden section-bg p-10 md:p-20 text-center bg-white border border-green-100">
-            <div class="relative z-10">
-                <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-green-700 uppercase bg-green-100 rounded-full">Digital Agriculture 2025</span>
-                <h1 class="text-5xl md:text-7xl font-black text-[#14532d] mb-6 leading-tight">
-                    Africa's Trusted <br><span class="text-[#37a44f]">Agri-Ecosystem</span>
-                </h1>
-                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
-                    Seamlessly connecting farmers to global buyers, verified input suppliers, and secure investment opportunities.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <a href="#marketplace" class="w-full sm:w-auto main-button bg-[#14532d] text-white text-lg font-bold px-10 py-4 rounded-2xl">
-                        Browse Produce
-                    </a>
-                    <a href="#inputs" class="w-full sm:w-auto main-button bg-white border-2 border-gray-200 text-gray-700 text-lg font-bold px-10 py-4 rounded-2xl hover:border-[#37a44f]">
-                        Shop Inputs
-                    </a>
-                </div>
-            </div>
-        </section>
+        <!-- Hero Section -->
+        <section id="home" class="relative overflow-hidden section-bg p-10 md:p-20 text-center bg-white border border-green-100">
+            <div class="relative z-10">
+                <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-green-700 uppercase bg-green-100 rounded-full">Digital Agriculture 2025</span>
+                <h1 class="text-5xl md:text-7xl font-black text-[#14532d] mb-6 leading-tight">
+                    Africa's Trusted <br><span class="text-[#37a44f]">Agri-Ecosystem</span>
+                </h1>
+                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
+                    Seamlessly connecting farmers to global buyers, verified input suppliers, and secure investment opportunities.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#marketplace" class="w-full sm:w-auto main-button bg-[#14532d] text-white text-lg font-bold px-10 py-4 rounded-2xl">
+                        Browse Produce
+                    </a>
+                    <a href="#inputs" class="w-full sm:w-auto main-button bg-white border-2 border-gray-200 text-gray-700 text-lg font-bold px-10 py-4 rounded-2xl hover:border-[#37a44f]">
+                        Shop Inputs
+                    </a>
+                </div>
+            </div>
+        </section>
 
-        <!-- Marketplace Preview -->
-        <section id="marketplace" class="space-y-12">
-            <div class="flex justify-between items-end">
-                <div>
-                    <h2 class="text-3xl font-black text-[#14532d]">Featured Marketplace</h2>
-                    <p class="text-gray-500">Direct-from-farm listings with verified quality badges.</p>
-                </div>
-                <button class="text-[#37a44f] font-bold hover:underline">View All &rarr;</button>
-            </div>
-            
-            <div id="marketplace-listings" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Data will load here -->
-                <div class="col-span-full py-20 text-center">
-                    <div class="animate-spin h-10 w-10 border-4 border-t-[#37a44f] border-gray-100 rounded-full mx-auto mb-4"></div>
-                    <p class="text-gray-400 font-medium">Connecting to secure database...</p>
-                </div>
-            </div>
-        </section>
+        <!-- Marketplace Preview -->
+        <section id="marketplace" class="space-y-12">
+            <div class="flex justify-between items-end">
+                <div>
+                    <h2 class="text-3xl font-black text-[#14532d]">Featured Marketplace</h2>
+                    <p class="text-gray-500">Direct-from-farm listings with verified quality badges.</p>
+                </div>
+                <button class="text-[#37a44f] font-bold hover:underline">View All &rarr;</button>
+            </div>
+            
+            <div id="marketplace-listings" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Data will load here -->
+                <div class="col-span-full py-20 text-center">
+                    <div class="animate-spin h-10 w-10 border-4 border-t-[#37a44f] border-gray-100 rounded-full mx-auto mb-4"></div>
+                    <p class="text-gray-400 font-medium">Connecting to secure database...</p>
+                </div>
+            </div>
+        </section>
 
-        <!-- Detailed Input Store Section -->
-        <section id="inputs" class="space-y-12">
-            <div class="text-center max-w-3xl mx-auto">
-                <h2 class="text-4xl font-black text-[#14532d]">The Input Store</h2>
-                <p class="text-lg text-gray-500 mt-4">Sourcing high-quality agricultural materials shouldn't be a gamble. We partner with licensed distributors to ensure every purchase is authenticated.</p>
-            </div>
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                <!-- Drug Shops -->
-                <div class="group section-bg p-10 border border-transparent hover:border-blue-200 transition-all">
-                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">💊</div>
-                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Vet Drug Shops</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Access licensed veterinary pharmacies. From mandatory vaccines to specialized nutritional supplements, your livestock health is secured.</p>
-                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
-                        <li class="flex items-center text-blue-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Verified Pharmaceutical Licenses</li>
-                        <li class="flex items-center text-blue-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Cold-Chain Logistics Tracking</li>
-                    </ul>
-                    <button class="w-full py-4 rounded-xl bg-blue-600 text-white font-bold main-button">Browse Drug Shops</button>
-                </div>
+        <!-- Detailed Input Store Section -->
+        <section id="inputs" class="space-y-12">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-4xl font-black text-[#14532d]">The Input Store</h2>
+                <p class="text-lg text-gray-500 mt-4">Sourcing high-quality agricultural materials shouldn't be a gamble. We partner with licensed distributors to ensure every purchase is authenticated.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Drug Shops -->
+                <div class="group section-bg p-10 border border-transparent hover:border-blue-200 transition-all">
+                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">💊</div>
+                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Vet Drug Shops</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">Access licensed veterinary pharmacies. From mandatory vaccines to specialized nutritional supplements, your livestock health is secured.</p>
+                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
+                        <li class="flex items-center text-blue-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Verified Pharmaceutical Licenses</li>
+                        <li class="flex items-center text-blue-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Cold-Chain Logistics Tracking</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl bg-blue-600 text-white font-bold main-button">Browse Drug Shops</button>
+                </div>
 
-                <!-- Agro-Chemicals -->
-                <div class="group section-bg p-10 border border-transparent hover:border-green-200 transition-all">
-                    <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🧪</div>
-                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Agrochemical Shops</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Sourcing authenticated fertilizers, soil conditioners, and pest management solutions from certified regional distributors.</p>
-                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
-                        <li class="flex items-center text-green-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Anti-Counterfeit Verification</li>
-                        <li class="flex items-center text-green-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Bulk B2B Pricing Available</li>
-                    </ul>
-                    <button class="w-full py-4 rounded-xl bg-[#14532d] text-white font-bold main-button">Browse Agro Shops</button>
-                </div>
+                <!-- Agro-Chemicals -->
+                <div class="group section-bg p-10 border border-transparent hover:border-green-200 transition-all">
+                    <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🧪</div>
+                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Agrochemical Shops</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">Sourcing authenticated fertilizers, soil conditioners, and pest management solutions from certified regional distributors.</p>
+                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
+                        <li class="flex items-center text-green-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Anti-Counterfeit Verification</li>
+                        <li class="flex items-center text-green-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Bulk B2B Pricing Available</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl bg-[#14532d] text-white font-bold main-button">Browse Agro Shops</button>
+                </div>
 
-                <!-- Farm Equipment -->
-                <div class="group section-bg p-10 border border-transparent hover:border-orange-200 transition-all">
-                    <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🚜</div>
-                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Farm Equipment</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Whether you need to buy a high-performance tractor or hire irrigation tools for a season, our equipment portal has you covered.</p>
-                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
-                        <li class="flex items-center text-orange-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Flexible Hire/Lease Options</li>
-                        <li class="flex items-center text-orange-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Maintenance & Tech Support</li>
-                    </ul>
-                    <button class="w-full py-4 rounded-xl bg-orange-600 text-white font-bold main-button">Browse Equipment</button>
-                </div>
-            </div>
-        </section>
+                <!-- Farm Equipment -->
+                <div class="group section-bg p-10 border border-transparent hover:border-orange-200 transition-all">
+                    <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🚜</div>
+                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Farm Equipment</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">Whether you need to buy a high-performance tractor or hire irrigation tools for a season, our equipment portal has you covered.</p>
+                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
+                        <li class="flex items-center text-orange-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Flexible Hire/Lease Options</li>
+                        <li class="flex items-center text-orange-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Maintenance & Tech Support</li>
+                    </ul>
+                    <button class="w-full py-4 rounded-xl bg-orange-600 text-white font-bold main-button">Browse Equipment</button>
+                </div>
+            </div>
+        </section>
 
-        <!-- Trust & Financing -->
-        <section id="financing" class="section-bg p-8 md:p-16 bg-[#14532d] text-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-10 opacity-10">
-                <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-            </div>
-            <div class="relative z-10 max-w-3xl">
-                <h2 class="text-4xl font-black mb-6">Financial Inclusion & Escrow</h2>
-                <p class="text-xl text-green-100 mb-10 leading-relaxed">
-                    We eliminate transaction risk. Every payment on FarmConnecta is held in a mandatory **Secure Escrow System**, released only when the buyer confirms delivery and quality. 
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <button class="bg-white text-[#14532d] px-8 py-3.5 rounded-xl font-black main-button">View Funded Projects</button>
-                    <button class="bg-transparent border-2 border-white text-white px-8 py-3.5 rounded-xl font-black main-button hover:bg-white hover:text-[#14532d]">How it Works</button>
-                </div>
-            </div>
-        </section>
+        <!-- Trust & Financing -->
+        <section id="financing" class="section-bg p-8 md:p-16 bg-[#14532d] text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-10 opacity-10">
+                <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+            </div>
+            <div class="relative z-10 max-w-3xl">
+                <h2 class="text-4xl font-black mb-6">Financial Inclusion & Escrow</h2>
+                <p class="text-xl text-green-100 mb-10 leading-relaxed">
+                    We eliminate transaction risk. Every payment on FarmConnecta is held in a mandatory **Secure Escrow System**, released only when the buyer confirms delivery and quality. 
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-white text-[#14532d] px-8 py-3.5 rounded-xl font-black main-button">View Funded Projects</button>
+                    <button class="bg-transparent border-2 border-white text-white px-8 py-3.5 rounded-xl font-black main-button hover:bg-white hover:text-[#14532d]">How it Works</button>
+                </div>
+            </div>
+        </section>
 
-    </main>
+    </main>
 
-    <footer class="bg-gray-900 text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid md:grid-cols-4 gap-12">
-            <div class="col-span-2">
-                <span class="text-2xl font-black tracking-tight text-[#37a44f]">FarmConnecta</span>
-                <p class="mt-4 text-gray-400 max-w-sm">Building the digital infrastructure required to feed the future of Africa through transparency and technology.</p>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Platform</h4>
-                <ul class="space-y-2 text-gray-400 font-medium">
-                    <li><a href="#" class="hover:text-white transition">Marketplace</a></li>
-                    <li><a href="#" class="hover:text-white transition">Service Hub</a></li>
-                    <li><a href="#" class="hover:text-white transition">Logistics</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Legal</h4>
-                <ul class="space-y-2 text-gray-400 font-medium">
-                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-white transition">Escrow Agreement</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="mt-20 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-            &copy; 2025 FarmConnecta. Empowering the African Farmer.
-        </div>
-    </footer>
+    <footer class="bg-gray-900 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <span class="text-2xl font-black tracking-tight text-[#37a44f]">FarmConnecta</span>
+                <p class="mt-4 text-gray-400 max-w-sm">Building the digital infrastructure required to feed the future of Africa through transparency and technology.</p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Platform</h4>
+                <ul class="space-y-2 text-gray-400 font-medium">
+                    <li><a href="#" class="hover:text-white transition">Marketplace</a></li>
+                    <li><a href="#" class="hover:text-white transition">Service Hub</a></li>
+                    <li><a href="#" class="hover:text-white transition">Logistics</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Legal</h4>
+                <ul class="space-y-2 text-gray-400 font-medium">
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Escrow Agreement</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-20 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+            &copy; 2025 FarmConnecta. Empowering the African Farmer.
+        </div>
+    </footer>
 
-    <script type="module">
-        /**
-         * PRODUCTION SETUP INSTRUCTIONS:
-         * 1. Go to Firebase Console -> Project Settings -> General -> Your Apps
-         * 2. Replace the empty values in 'firebaseConfig' with your actual keys.
-         */
-        const firebaseConfig = {
-            apiKey: "",
-            authDomain: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
-        };
+    <script type="module">
+        /**
+         * PRODUCTION SETUP INSTRUCTIONS:
+         * 1. Go to Firebase Console -> Project Settings -> General -> Your Apps
+         * 2. Replace the empty values in 'firebaseConfig' with your actual keys.
+         */
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
 
-        const { fb } = window;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'farm-connecta-prod';
-        
-        async function startApp() {
-            // Check if config is provided before initializing
-            if (!firebaseConfig.apiKey) {
-                console.warn("Firebase Config is missing. App is running in Mock Mode.");
-                renderMockData();
-                return;
-            }
+        const { fb } = window;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'farm-connecta-prod';
+        
+        async function startApp() {
+            // Check if config is provided before initializing
+            if (!firebaseConfig.apiKey) {
+                console.warn("Firebase Config is missing. App is running in Mock Mode.");
+                renderMockData();
+                return;
+            }
 
-            try {
-                const app = fb.initializeApp(firebaseConfig);
-                const db = fb.getFirestore(app);
-                const auth = fb.getAuth(app);
+            try {
+                const app = fb.initializeApp(firebaseConfig);
+                const db = fb.getFirestore(app);
+                const auth = fb.getAuth(app);
 
-                await fb.setPersistence(auth, fb.browserSessionPersistence);
-                await fb.signInAnonymously(auth);
+                await fb.setPersistence(auth, fb.browserSessionPersistence);
+                await fb.signInAnonymously(auth);
 
-                fb.onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        document.getElementById('auth-button').textContent = 'Dashboard';
-                        fetchProductionData(db);
-                    }
-                });
-            } catch (err) {
-                console.error("Firebase Error:", err);
-                renderMockData();
-            }
-        }
+                fb.onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        document.getElementById('auth-button').textContent = 'Dashboard';
+                        fetchProductionData(db);
+                    }
+                });
+            } catch (err) {
+                console.error("Firebase Error:", err);
+                renderMockData();
+            }
+        }
 
-        function renderMockData() {
-            const listings = [
-                { name: 'Red Onions (100kg)', price: '35,000 NGN', icon: '🧅', location: 'Kano' },
-                { name: 'Organic Honey', price: '4,500 NGN', icon: '🍯', location: 'Oyo' },
-                { name: 'Poultry Feed', price: '12,000 NGN', icon: '🌽', location: 'Lagos' },
-                { name: 'Broiler Chicks', price: '600 NGN', icon: '🐥', location: 'Enugu' }
-            ];
-            const container = document.getElementById('marketplace-listings');
-            container.innerHTML = listings.map(l => `
-                <div class="section-bg p-8 flex flex-col items-center text-center hover:shadow-xl hover:scale-[1.02] transition duration-300">
-                    <div class="text-5xl mb-6">${l.icon}</div>
-                    <h3 class="text-lg font-black text-[#14532d]">${l.name}</h3>
-                    <p class="text-xl font-bold text-[#37a44f] mt-2">${l.price}</p>
-                    <p class="text-xs text-gray-400 mt-1 font-bold uppercase tracking-widest">${l.location}</p>
-                    <button class="w-full mt-6 py-3 rounded-xl bg-gray-50 text-[#14532d] font-bold text-sm hover:bg-[#dcfce7]">Order Now</button>
-                </div>
-            `).join('');
-        }
+        function renderMockData() {
+            const listings = [
+                { name: 'Red Onions (100kg)', price: '35,000 NGN', icon: '🧅', location: 'Kano' },
+                { name: 'Organic Honey', price: '4,500 NGN', icon: '🍯', location: 'Oyo' },
+                { name: 'Poultry Feed', price: '12,000 NGN', icon: '🌽', location: 'Lagos' },
+                { name: 'Broiler Chicks', price: '600 NGN', icon: '🐥', location: 'Enugu' }
+            ];
+            const container = document.getElementById('marketplace-listings');
+            container.innerHTML = listings.map(l => `
+                <div class="section-bg p-8 flex flex-col items-center text-center hover:shadow-xl hover:scale-[1.02] transition duration-300">
+                    <div class="text-5xl mb-6">${l.icon}</div>
+                    <h3 class="text-lg font-black text-[#14532d]">${l.name}</h3>
+                    <p class="text-xl font-bold text-[#37a44f] mt-2">${l.price}</p>
+                    <p class="text-xs text-gray-400 mt-1 font-bold uppercase tracking-widest">${l.location}</p>
+                    <button class="w-full mt-6 py-3 rounded-xl bg-gray-50 text-[#14532d] font-bold text-sm hover:bg-[#dcfce7]">Order Now</button>
+                </div>
+            `).join('');
+        }
 
-        async function fetchProductionData(db) {
-            const path = `artifacts/${appId}/public/data/listings`;
-            const q = fb.query(fb.collection(db, path), fb.limit(8));
-            const snapshot = await fb.getDocs(q);
-            if (!snapshot.empty) {
-                const data = snapshot.docs.map(d => d.data());
-                // (Logic to render real data...)
-            } else {
-                renderMockData();
-            }
-        }
+        async function fetchProductionData(db) {
+            const path = `artifacts/${appId}/public/data/listings`;
+            const q = fb.query(fb.collection(db, path), fb.limit(8));
+            const snapshot = await fb.getDocs(q);
+            if (!snapshot.empty) {
+                const data = snapshot.docs.map(d => d.data());
+                // (Logic to render real data...)
+            } else {
+                renderMockData();
+            }
+        }
 
-        window.onload = startApp;
-    </script>
+        window.onload = startApp;
+    </script>
 </body>
 </html>
