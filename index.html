@@ -3,290 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FarmConnecta - Africa's Digital Agriculture Ecosystem</title>
-    <!-- Load Tailwind CSS -->
+    <title>FarmConnecta - Full Stack Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter font -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            background-color: #f7fdee; 
-        }
-        .section-bg {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-        }
-        .main-button {
-            transition: all 0.2s;
-        }
-        .main-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #14532d;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #dcfce7;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f7fdee; }
+        .section-bg { background-color: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .modal-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+        .hidden { display: none; }
     </style>
 
-    <!-- Firebase SDK Imports -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, query, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global access for logic script
-        window.fb = { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, doc, setDoc, collection, query, limit, getDocs, setPersistence, browserSessionPersistence };
+        window.fb = { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, doc, setDoc, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp };
     </script>
 </head>
 <body class="text-gray-800">
 
     <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="#home" class="flex-shrink-0 flex items-center space-x-2">
-                    <div class="bg-[#14532d] p-1.5 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2 2 2 0 012 2v.657M7 20h11a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <span class="text-2xl font-bold text-[#14532d] tracking-tight">FarmConnecta</span>
-                </a>
-
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#marketplace" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Marketplace</a>
-                    <a href="#inputs" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Input Store</a>
-                    <a href="#services" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Services</a>
-                    <a href="#financing" class="text-gray-600 hover:text-[#37a44f] text-sm font-semibold transition">Invest</a>
-                    <button id="auth-button" class="bg-[#37a44f] text-white px-5 py-2.5 rounded-xl text-sm font-bold main-button">
-                        Account
-                    </button>
-                </div>
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-green-100">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-green-800 p-2 rounded-lg text-white">🚜</div>
+                <span class="text-xl font-bold text-green-900">FarmConnecta</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleModal('list-modal')" class="bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:bg-green-800 transition">
+                    + List Produce
+                </button>
+                <div id="user-badge" class="text-xs font-mono bg-gray-100 px-2 py-1 rounded border">Connecting...</div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
-
-        <!-- Hero Section -->
-        <section id="home" class="relative overflow-hidden section-bg p-10 md:p-20 text-center bg-white border border-green-100">
-            <div class="relative z-10">
-                <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-green-700 uppercase bg-green-100 rounded-full">Digital Agriculture 2025</span>
-                <h1 class="text-5xl md:text-7xl font-black text-[#14532d] mb-6 leading-tight">
-                    Africa's Trusted <br><span class="text-[#37a44f]">Agri-Ecosystem</span>
-                </h1>
-                <p class="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
-                    Seamlessly connecting farmers to global buyers, verified input suppliers, and secure investment opportunities.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <a href="#marketplace" class="w-full sm:w-auto main-button bg-[#14532d] text-white text-lg font-bold px-10 py-4 rounded-2xl">
-                        Browse Produce
-                    </a>
-                    <a href="#inputs" class="w-full sm:w-auto main-button bg-white border-2 border-gray-200 text-gray-700 text-lg font-bold px-10 py-4 rounded-2xl hover:border-[#37a44f]">
-                        Shop Inputs
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Marketplace Preview -->
-        <section id="marketplace" class="space-y-12">
-            <div class="flex justify-between items-end">
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-16">
+        
+        <!-- Marketplace Section -->
+        <section>
+            <div class="flex justify-between items-end mb-8">
                 <div>
-                    <h2 class="text-3xl font-black text-[#14532d]">Featured Marketplace</h2>
-                    <p class="text-gray-500">Direct-from-farm listings with verified quality badges.</p>
+                    <h2 class="text-3xl font-black text-green-900">Live Marketplace</h2>
+                    <p class="text-gray-500">Real-time listings from verified farmers.</p>
                 </div>
-                <button class="text-[#37a44f] font-bold hover:underline">View All &rarr;</button>
             </div>
             
-            <div id="marketplace-listings" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Data will load here -->
-                <div class="col-span-full py-20 text-center">
-                    <div class="animate-spin h-10 w-10 border-4 border-t-[#37a44f] border-gray-100 rounded-full mx-auto mb-4"></div>
-                    <p class="text-gray-400 font-medium">Connecting to secure database...</p>
+            <div id="marketplace-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Real-time data injected here -->
+                <div id="loading-state" class="col-span-full text-center py-12 text-gray-400">
+                    <div class="animate-pulse flex flex-col items-center">
+                        <div class="h-12 w-12 bg-gray-200 rounded-full mb-4"></div>
+                        <p>Connecting to FarmConnecta Network...</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Detailed Input Store Section -->
-        <section id="inputs" class="space-y-12">
-            <div class="text-center max-w-3xl mx-auto">
-                <h2 class="text-4xl font-black text-[#14532d]">The Input Store</h2>
-                <p class="text-lg text-gray-500 mt-4">Sourcing high-quality agricultural materials shouldn't be a gamble. We partner with licensed distributors to ensure every purchase is authenticated.</p>
-            </div>
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                <!-- Drug Shops -->
-                <div class="group section-bg p-10 border border-transparent hover:border-blue-200 transition-all">
-                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">💊</div>
-                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Vet Drug Shops</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Access licensed veterinary pharmacies. From mandatory vaccines to specialized nutritional supplements, your livestock health is secured.</p>
-                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
-                        <li class="flex items-center text-blue-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Verified Pharmaceutical Licenses</li>
-                        <li class="flex items-center text-blue-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Cold-Chain Logistics Tracking</li>
-                    </ul>
-                    <button class="w-full py-4 rounded-xl bg-blue-600 text-white font-bold main-button">Browse Drug Shops</button>
+        <!-- Input Store -->
+        <section id="inputs" class="space-y-8">
+            <h2 class="text-3xl font-black text-green-900">Verified Input Store</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="section-bg p-6 border-t-4 border-blue-500">
+                    <span class="text-3xl">💊</span>
+                    <h3 class="font-bold text-xl mt-2">Vet Drugs</h3>
+                    <p class="text-sm text-gray-500 mb-4">Licensed vaccines & meds.</p>
+                    <button onclick="alert('Store opening soon!')" class="w-full bg-blue-50 text-blue-700 py-2 rounded-lg font-bold">Shop Now</button>
                 </div>
-
-                <!-- Agro-Chemicals -->
-                <div class="group section-bg p-10 border border-transparent hover:border-green-200 transition-all">
-                    <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🧪</div>
-                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Agrochemical Shops</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Sourcing authenticated fertilizers, soil conditioners, and pest management solutions from certified regional distributors.</p>
-                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
-                        <li class="flex items-center text-green-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Anti-Counterfeit Verification</li>
-                        <li class="flex items-center text-green-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Bulk B2B Pricing Available</li>
-                    </ul>
-                    <button class="w-full py-4 rounded-xl bg-[#14532d] text-white font-bold main-button">Browse Agro Shops</button>
+                <div class="section-bg p-6 border-t-4 border-green-500">
+                    <span class="text-3xl">🧪</span>
+                    <h3 class="font-bold text-xl mt-2">Agro-Chemicals</h3>
+                    <p class="text-sm text-gray-500 mb-4">Fertilizers & Pesticides.</p>
+                    <button onclick="alert('Store opening soon!')" class="w-full bg-green-50 text-green-700 py-2 rounded-lg font-bold">Shop Now</button>
                 </div>
-
-                <!-- Farm Equipment -->
-                <div class="group section-bg p-10 border border-transparent hover:border-orange-200 transition-all">
-                    <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition">🚜</div>
-                    <h3 class="text-2xl font-bold text-[#14532d] mb-4">Farm Equipment</h3>
-                    <p class="text-gray-500 mb-8 leading-relaxed">Whether you need to buy a high-performance tractor or hire irrigation tools for a season, our equipment portal has you covered.</p>
-                    <ul class="space-y-3 mb-10 text-sm font-semibold text-gray-600">
-                        <li class="flex items-center text-orange-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Flexible Hire/Lease Options</li>
-                        <li class="flex items-center text-orange-600"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"></path></svg> Maintenance & Tech Support</li>
-                    </ul>
-                    <button class="w-full py-4 rounded-xl bg-orange-600 text-white font-bold main-button">Browse Equipment</button>
+                <div class="section-bg p-6 border-t-4 border-orange-500">
+                    <span class="text-3xl">🚜</span>
+                    <h3 class="font-bold text-xl mt-2">Equipment</h3>
+                    <p class="text-sm text-gray-500 mb-4">Tractors & Tools for hire.</p>
+                    <button onclick="alert('Store opening soon!')" class="w-full bg-orange-50 text-orange-700 py-2 rounded-lg font-bold">Browse Catalog</button>
                 </div>
             </div>
         </section>
-
-        <!-- Trust & Financing -->
-        <section id="financing" class="section-bg p-8 md:p-16 bg-[#14532d] text-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-10 opacity-10">
-                <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
-            </div>
-            <div class="relative z-10 max-w-3xl">
-                <h2 class="text-4xl font-black mb-6">Financial Inclusion & Escrow</h2>
-                <p class="text-xl text-green-100 mb-10 leading-relaxed">
-                    We eliminate transaction risk. Every payment on FarmConnecta is held in a mandatory **Secure Escrow System**, released only when the buyer confirms delivery and quality. 
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <button class="bg-white text-[#14532d] px-8 py-3.5 rounded-xl font-black main-button">View Funded Projects</button>
-                    <button class="bg-transparent border-2 border-white text-white px-8 py-3.5 rounded-xl font-black main-button hover:bg-white hover:text-[#14532d]">How it Works</button>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <footer class="bg-gray-900 text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid md:grid-cols-4 gap-12">
-            <div class="col-span-2">
-                <span class="text-2xl font-black tracking-tight text-[#37a44f]">FarmConnecta</span>
-                <p class="mt-4 text-gray-400 max-w-sm">Building the digital infrastructure required to feed the future of Africa through transparency and technology.</p>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Platform</h4>
-                <ul class="space-y-2 text-gray-400 font-medium">
-                    <li><a href="#" class="hover:text-white transition">Marketplace</a></li>
-                    <li><a href="#" class="hover:text-white transition">Service Hub</a></li>
-                    <li><a href="#" class="hover:text-white transition">Logistics</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Legal</h4>
-                <ul class="space-y-2 text-gray-400 font-medium">
-                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-white transition">Escrow Agreement</a></li>
-                </ul>
-            </div>
+    <!-- List Produce Modal -->
+    <div id="list-modal" class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6">List Your Produce</h3>
+            <form id="produce-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold mb-1">Item Name</label>
+                    <input type="text" id="p-name" placeholder="e.g. Yellow Maize" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Price (NGN)</label>
+                        <input type="number" id="p-price" placeholder="5000" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-1">Quantity</label>
+                        <input type="text" id="p-qty" placeholder="100kg" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">Location</label>
+                    <input type="text" id="p-loc" placeholder="Kano, Nigeria" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="toggleModal('list-modal')" class="flex-1 py-3 font-bold text-gray-500">Cancel</button>
+                    <button type="submit" class="flex-1 py-3 bg-green-700 text-white rounded-xl font-bold shadow-lg">Post Listing</button>
+                </div>
+            </form>
         </div>
-        <div class="mt-20 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-            &copy; 2025 FarmConnecta. Empowering the African Farmer.
-        </div>
-    </footer>
+    </div>
 
     <script type="module">
-        /**
-         * PRODUCTION SETUP INSTRUCTIONS:
-         * 1. Go to Firebase Console -> Project Settings -> General -> Your Apps
-         * 2. Replace the empty values in 'firebaseConfig' with your actual keys.
-         */
         const firebaseConfig = {
-           apiKey: "AIzaSyAj6IgYNndFQqEZVUplg99gLZnNiJJ9I_Y",
+            apiKey: "AIzaSyAj6IgYNndFQqEZVUplg99gLZnNiJJ9I_Y",
             authDomain: "farmconnecta-6c1f0.firebaseapp.com",
             projectId: "farmconnecta-6c1f0",
             storageBucket: "farmconnecta-6c1f0.firebasestorage.app",
             messagingSenderId: "211167581489",
-            appId: "1:211167581489:web:f65e63b8f895b4066d0c10",
-             measurementId: "G-3L6GBJGVZY"
+            appId: "1:211167581489:web:b0a264e0500a21c16d0c10",
+            measurementId: "G-CFGJ35YLE6"
         };
 
         const { fb } = window;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'farm-connecta-prod';
-        
-        async function startApp() {
-            // Check if config is provided before initializing
-            if (!firebaseConfig.apiKey) {
-                console.warn("Firebase Config is missing. App is running in Mock Mode.");
-                renderMockData();
+        const appId = 'farmconnecta-v1';
+        let db, auth, user;
+
+        window.toggleModal = (id) => document.getElementById(id).classList.toggle('hidden');
+
+        async function init() {
+            if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "") {
+                renderMocks();
                 return;
             }
 
             try {
                 const app = fb.initializeApp(firebaseConfig);
-                const db = fb.getFirestore(app);
-                const auth = fb.getAuth(app);
+                db = fb.getFirestore(app);
+                auth = fb.getAuth(app);
 
-                await fb.setPersistence(auth, fb.browserSessionPersistence);
-                await fb.signInAnonymously(auth);
-
-                fb.onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        document.getElementById('auth-button').textContent = 'Dashboard';
-                        fetchProductionData(db);
+                fb.onAuthStateChanged(auth, (u) => {
+                    user = u;
+                    if (u) {
+                        document.getElementById('user-badge').textContent = `ID: ${u.uid.substring(0,6)}...`;
+                        listenToMarketplace();
+                    } else {
+                        fb.signInAnonymously(auth).catch(err => {
+                            console.error("Auth Error:", err);
+                            renderMocks("Auth failed. Check Firebase console.");
+                        });
                     }
                 });
             } catch (err) {
-                console.error("Firebase Error:", err);
-                renderMockData();
+                console.error("Firebase Init Error:", err);
+                renderMocks("Connection Error. Check your Config keys.");
             }
         }
 
-        function renderMockData() {
-            const listings = [
-                { name: 'Red Onions (100kg)', price: '35,000 NGN', icon: '🧅', location: 'Kano' },
-                { name: 'Organic Honey', price: '4,500 NGN', icon: '🍯', location: 'Oyo' },
-                { name: 'Poultry Feed', price: '12,000 NGN', icon: '🌽', location: 'Lagos' },
-                { name: 'Broiler Chicks', price: '600 NGN', icon: '🐥', location: 'Enugu' }
-            ];
-            const container = document.getElementById('marketplace-listings');
-            container.innerHTML = listings.map(l => `
-                <div class="section-bg p-8 flex flex-col items-center text-center hover:shadow-xl hover:scale-[1.02] transition duration-300">
-                    <div class="text-5xl mb-6">${l.icon}</div>
-                    <h3 class="text-lg font-black text-[#14532d]">${l.name}</h3>
-                    <p class="text-xl font-bold text-[#37a44f] mt-2">${l.price}</p>
-                    <p class="text-xs text-gray-400 mt-1 font-bold uppercase tracking-widest">${l.location}</p>
-                    <button class="w-full mt-6 py-3 rounded-xl bg-gray-50 text-[#14532d] font-bold text-sm hover:bg-[#dcfce7]">Order Now</button>
-                </div>
-            `).join('');
-        }
-
-        async function fetchProductionData(db) {
+        function listenToMarketplace() {
             const path = `artifacts/${appId}/public/data/listings`;
-            const q = fb.query(fb.collection(db, path), fb.limit(8));
-            const snapshot = await fb.getDocs(q);
-            if (!snapshot.empty) {
-                const data = snapshot.docs.map(d => d.data());
-                // (Logic to render real data...)
-            } else {
-                renderMockData();
-            }
+            const q = fb.query(fb.collection(db, path));
+
+            fb.onSnapshot(q, (snapshot) => {
+                const container = document.getElementById('marketplace-grid');
+                if (snapshot.empty) {
+                    container.innerHTML = `<div class="col-span-full text-center py-10 bg-white rounded-2xl border-2 border-dashed border-gray-100 text-gray-400">No live listings yet. Be the first to post!</div>`;
+                    return;
+                }
+
+                container.innerHTML = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return `
+                        <div class="section-bg p-6 hover:shadow-xl transition group border border-transparent hover:border-green-100">
+                            <div class="h-32 bg-green-50 rounded-xl mb-4 flex items-center justify-center text-4xl group-hover:scale-105 transition">📦</div>
+                            <h3 class="font-bold text-green-900">${data.name}</h3>
+                            <p class="text-green-600 font-black mt-1">${Number(data.price).toLocaleString()} NGN <span class="text-xs text-gray-400">/${data.qty}</span></p>
+                            <div class="flex items-center text-[10px] uppercase tracking-wider text-gray-400 font-bold mt-3">
+                                <span class="mr-2">📍 ${data.location}</span>
+                            </div>
+                            <button class="w-full mt-4 py-2 bg-green-100 text-green-800 rounded-lg text-sm font-bold hover:bg-green-700 hover:text-white transition">Buy Now</button>
+                        </div>
+                    `;
+                }).join('');
+            }, (err) => {
+                console.error("Firestore Error:", err);
+                if (err.code === 'permission-denied') {
+                    renderMocks("Permission Denied. Did you publish your Firestore Rules?");
+                }
+            });
         }
 
-        window.onload = startApp;
+        document.getElementById('produce-form').onsubmit = async (e) => {
+            e.preventDefault();
+            if (!user) return alert("Please wait for secure connection...");
+
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = "Posting...";
+
+            try {
+                const path = `artifacts/${appId}/public/data/listings`;
+                await fb.addDoc(fb.collection(db, path), {
+                    name: document.getElementById('p-name').value,
+                    price: document.getElementById('p-price').value,
+                    qty: document.getElementById('p-qty').value,
+                    location: document.getElementById('p-loc').value,
+                    userId: user.uid,
+                    createdAt: fb.serverTimestamp()
+                });
+                
+                e.target.reset();
+                toggleModal('list-modal');
+            } catch (err) {
+                alert("Error posting listing. Check your Firestore Rules.");
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Post Listing";
+            }
+        };
+
+        function renderMocks(reason = "Firebase Config Missing") {
+            document.getElementById('user-badge').textContent = "Demo Mode";
+            document.getElementById('marketplace-grid').innerHTML = `
+                <div class="col-span-full p-6 bg-amber-50 text-amber-800 rounded-xl text-sm mb-4 border border-amber-200">
+                    <div class="flex items-center">
+                        <span class="text-xl mr-3">⚠️</span>
+                        <div>
+                            <p class="font-bold">App is in Demo Mode</p>
+                            <p class="opacity-80">${reason}. To go live, add your keys to the code.</p>
+                        </div>
+                    </div>
+                </div>
+                ${[1,2,3,4].map(() => `
+                    <div class="section-bg p-6 opacity-60 grayscale">
+                        <div class="h-32 bg-gray-100 rounded-xl mb-4"></div>
+                        <div class="h-4 bg-gray-200 w-3/4 mb-2"></div>
+                        <div class="h-4 bg-gray-200 w-1/2"></div>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
