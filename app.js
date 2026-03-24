@@ -94,7 +94,7 @@ const listings = {
 };
 
 const communityLinks = {
-    whatsapp: "https://wa.me/000000000000?text=Hello%20FarmConnecta%2C%20I%20would%20like%20to%20learn%20more.",
+    whatsapp: "https://wa.me/998999968085?text=Hello%20FarmConnecta%2C%20I%20would%20like%20to%20learn%20more.",
     telegram: "https://t.me/farmconnecta"
 };
 
