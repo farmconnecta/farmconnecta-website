@@ -1,0 +1,580 @@
+:root {
+    --surface: rgba(255, 252, 247, 0.82);
+    --text: #1d2f22;
+    --muted: #556659;
+    --line: rgba(29, 47, 34, 0.1);
+    --green: #1f6f43;
+    --green-deep: #0d4f2c;
+    --gold: #c58a2c;
+    --earth: #754c24;
+    --shadow: 0 22px 60px rgba(47, 60, 36, 0.12);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --content-width: 1180px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(197, 138, 44, 0.25), transparent 30%),
+        radial-gradient(circle at top right, rgba(31, 111, 67, 0.15), transparent 26%),
+        linear-gradient(180deg, #f9f4e9 0%, #f2ebdc 48%, #f8f2e6 100%);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+.page-shell {
+    width: min(calc(100% - 32px), var(--content-width));
+    margin: 20px auto 0;
+}
+
+.site-header,
+.site-footer,
+.hero-card,
+.phase-card,
+.market-panel,
+.role-grid article,
+.architecture-grid article,
+.community-panel,
+.listing-card {
+    backdrop-filter: blur(10px);
+}
+
+.site-header {
+    position: sticky;
+    top: 12px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 20px;
+    background: rgba(255, 250, 240, 0.82);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), var(--gold));
+    color: #fff;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.brand-copy strong {
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.site-nav,
+.header-actions,
+.hero-actions,
+.community-actions,
+.footer-links,
+.market-tabs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.site-nav a {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.button,
+.market-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+    cursor: pointer;
+}
+
+.button:hover,
+.market-tab:hover {
+    transform: translateY(-1px);
+}
+
+.button-primary {
+    background: var(--green);
+    color: #fff;
+}
+
+.button-secondary,
+.button-ghost {
+    background: rgba(255, 255, 255, 0.62);
+    border-color: var(--line);
+}
+
+.button-whatsapp {
+    background: #1fae5b;
+    color: #fff;
+}
+
+.button-telegram {
+    background: #2086d7;
+    color: #fff;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+    padding: 72px 0 48px;
+    min-height: calc(100vh - 140px);
+    align-items: center;
+}
+
+.hero-compact {
+    min-height: auto;
+    padding-top: 56px;
+}
+
+.eyebrow {
+    margin: 0 0 16px;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.hero h1,
+.section-heading h2 {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.hero h1 {
+    font-size: clamp(3.3rem, 7vw, 6.4rem);
+    max-width: 11ch;
+}
+
+.hero-text,
+.section-heading p,
+.market-copy p,
+.role-grid p,
+.architecture-grid p,
+.community-copy p,
+.site-footer p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 1.04rem;
+}
+
+.hero-actions {
+    margin: 28px 0 24px;
+    flex-wrap: wrap;
+}
+
+.hero-points {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.hero-points li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+}
+
+.hero-points li::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), var(--gold));
+    flex: 0 0 auto;
+}
+
+.hero-panel {
+    display: grid;
+    gap: 18px;
+}
+
+.hero-card,
+.phase-card,
+.market-panel,
+.role-grid article,
+.architecture-grid article,
+.community-panel,
+.listing-card,
+.site-footer {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+}
+
+.hero-card {
+    padding: 28px;
+    border-radius: var(--radius-lg);
+}
+
+.hero-card-primary {
+    background:
+        linear-gradient(180deg, rgba(31, 111, 67, 0.94), rgba(13, 79, 44, 0.96)),
+        var(--surface);
+    color: #fff;
+}
+
+.hero-card-secondary {
+    background:
+        linear-gradient(180deg, rgba(255, 250, 240, 0.86), rgba(247, 240, 226, 0.98));
+}
+
+.card-label,
+.phase-tag {
+    margin: 0 0 16px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.metric-grid article {
+    padding: 18px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.metric-grid strong {
+    display: block;
+    font-size: 2rem;
+    font-family: "Space Grotesk", sans-serif;
+}
+
+.journey-list {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+.section {
+    padding: 46px 0;
+}
+
+.section-heading {
+    max-width: 760px;
+    margin-bottom: 26px;
+}
+
+.section-heading h2 {
+    font-size: clamp(2.1rem, 4vw, 4rem);
+    margin-bottom: 14px;
+}
+
+.phase-grid,
+.role-grid,
+.architecture-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.phase-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.phase-card,
+.role-grid article,
+.architecture-grid article {
+    padding: 24px;
+    border-radius: var(--radius-lg);
+}
+
+.phase-card.active {
+    border-color: rgba(31, 111, 67, 0.34);
+    transform: translateY(-4px);
+}
+
+.phase-card h3,
+.market-copy h3,
+.role-grid h3,
+.architecture-grid h3 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+}
+
+.phase-card ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.phase-note {
+    margin-top: 16px;
+    font-weight: 700;
+    color: var(--green-deep);
+}
+
+.market-tabs {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.market-tab {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: var(--line);
+    color: var(--muted);
+}
+
+.market-tab.is-active {
+    background: var(--earth);
+    border-color: var(--earth);
+    color: #fff;
+}
+
+.market-panel {
+    display: none;
+    padding: 24px;
+    border-radius: var(--radius-lg);
+}
+
+.market-panel.is-active {
+    display: block;
+}
+
+.listing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.listing-card {
+    padding: 18px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.listing-card .listing-type {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(31, 111, 67, 0.1);
+    color: var(--green-deep);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.listing-card h4 {
+    margin: 14px 0 10px;
+    font-size: 1.16rem;
+}
+
+.listing-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.listing-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0;
+}
+
+.listing-meta span,
+.listing-footer span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: rgba(117, 76, 36, 0.08);
+    color: var(--earth);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.listing-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.role-grid,
+.architecture-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.community-panel {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+    align-items: center;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    background:
+        radial-gradient(circle at top right, rgba(32, 134, 215, 0.14), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(31, 174, 91, 0.16), transparent 28%),
+        var(--surface);
+}
+
+.community-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.community-note {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.site-footer {
+    width: min(calc(100% - 32px), var(--content-width));
+    margin: 18px auto 28px;
+    padding: 20px 24px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-links {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+@media (max-width: 1080px) {
+    .hero,
+    .phase-grid,
+    .community-panel,
+    .site-footer {
+        grid-template-columns: 1fr;
+    }
+
+    .site-header {
+        border-radius: 28px;
+        flex-wrap: wrap;
+    }
+
+    .site-nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .header-actions,
+    .community-actions,
+    .footer-links {
+        justify-content: flex-start;
+    }
+
+    .listing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .page-shell,
+    .site-footer {
+        width: min(calc(100% - 20px), var(--content-width));
+    }
+
+    .site-header {
+        padding: 16px;
+    }
+
+    .header-actions,
+    .site-nav {
+        width: 100%;
+    }
+
+    .header-actions .button,
+    .hero-actions .button,
+    .community-actions .button {
+        width: 100%;
+    }
+
+    .hero {
+        padding-top: 44px;
+        min-height: auto;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.6rem, 16vw, 4rem);
+    }
+
+    .metric-grid,
+    .listing-grid,
+    .role-grid,
+    .architecture-grid,
+    .phase-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .market-panel,
+    .phase-card,
+    .role-grid article,
+    .architecture-grid article,
+    .community-panel,
+    .site-footer {
+        padding: 20px;
+    }
+
+    .listing-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

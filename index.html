@@ -3,253 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FarmConnecta - Full Stack Ecosystem</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f7fdee; }
-        .section-bg { background-color: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-        .modal-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-        .hidden { display: none; }
-    </style>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        window.fb = { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, doc, setDoc, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp };
-    </script>
+    <title>FarmConnecta | Digital Infrastructure for Africa's Agricultural Economy</title>
+    <meta
+        name="description"
+        content="FarmConnecta connects farmers, buyers, workers, service providers, logistics operators, investors, and agricultural finance institutions in one Africa-first digital ecosystem."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="text-gray-800">
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="#top" aria-label="FarmConnecta home">
+                <span class="brand-mark">FC</span>
+                <span class="brand-copy">
+                    <strong>FarmConnecta</strong>
+                    <span>Africa-first agri-tech ecosystem</span>
+                </span>
+            </a>
 
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-green-100">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="bg-green-800 p-2 rounded-lg text-white">🚜</div>
-                <span class="text-xl font-bold text-green-900">FarmConnecta</span>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleModal('list-modal')" class="bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:bg-green-800 transition">
-                    + List Produce
-                </button>
-                <div id="user-badge" class="text-xs font-mono bg-gray-100 px-2 py-1 rounded border">Connecting...</div>
-            </div>
-        </div>
-    </nav>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="#vision">Vision</a>
+                <a href="#marketplace">Marketplace</a>
+                <a href="#roles">Roles</a>
+                <a href="about.html">About</a>
+                <a href="partners.html">Partners</a>
+                <a href="contact.html">Contact</a>
+                <a href="#community">Community</a>
+            </nav>
 
-    <main class="max-w-6xl mx-auto px-4 py-8 space-y-16">
-        
-        <!-- Marketplace Section -->
-        <section>
-            <div class="flex justify-between items-end mb-8">
-                <div>
-                    <h2 class="text-3xl font-black text-green-900">Live Marketplace</h2>
-                    <p class="text-gray-500">Real-time listings from verified farmers.</p>
+            <div class="header-actions">
+                <a class="button button-secondary" href="#community">Join Community</a>
+                <a class="button button-primary" href="#marketplace">Explore Marketplace</a>
+            </div>
+        </header>
+
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Building the digital infrastructure for Africa's agricultural economy</p>
+                    <h1>One platform for agricultural discovery, coordination, and trust.</h1>
+                    <p class="hero-text">
+                        FarmConnecta connects farmers, buyers, workers, agronomists, logistics providers,
+                        investors, and agricultural finance institutions in one unified ecosystem built
+                        for real collaboration before automation and transactions.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#marketplace">Start in the Marketplace</a>
+                        <a class="button button-ghost" href="#vision">See the Product Vision</a>
+                    </div>
+
+                    <ul class="hero-points" aria-label="Key value points">
+                        <li>Role-based onboarding for every agricultural actor</li>
+                        <li>Products, jobs, services, logistics, and community in one place</li>
+                        <li>Built for scale, governance, and long-term investor confidence</li>
+                    </ul>
                 </div>
-            </div>
-            
-            <div id="marketplace-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Real-time data injected here -->
-                <div id="loading-state" class="col-span-full text-center py-12 text-gray-400">
-                    <div class="animate-pulse flex flex-col items-center">
-                        <div class="h-12 w-12 bg-gray-200 rounded-full mb-4"></div>
-                        <p>Connecting to FarmConnecta Network...</p>
+
+                <div class="hero-panel">
+                    <div class="hero-card hero-card-primary">
+                        <p class="card-label">Marketplace Pulse</p>
+                        <div class="metric-grid">
+                            <article>
+                                <strong>06</strong>
+                                <span>core role types</span>
+                            </article>
+                            <article>
+                                <strong>04</strong>
+                                <span>discovery lanes</span>
+                            </article>
+                            <article>
+                                <strong>01</strong>
+                                <span>connected ecosystem</span>
+                            </article>
+                            <article>
+                                <strong>MVP</strong>
+                                <span>public launch layer</span>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="hero-card hero-card-secondary">
+                        <p class="card-label">MVP Focus</p>
+                        <ol class="journey-list">
+                            <li>Connect participants across the agricultural value chain</li>
+                            <li>Enable trusted discovery and direct coordination</li>
+                            <li>Moderate quality before adding payments and automation</li>
+                        </ol>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Input Store -->
-        <section id="inputs" class="space-y-8">
-            <h2 class="text-3xl font-black text-green-900">Verified Input Store</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="section-bg p-6 border-t-4 border-blue-500">
-                    <span class="text-3xl">💊</span>
-                    <h3 class="font-bold text-xl mt-2">Vet Drugs</h3>
-                    <p class="text-sm text-gray-500 mb-4">Licensed vaccines & meds.</p>
-                    <button onclick="alert('Store opening soon!')" class="w-full bg-blue-50 text-blue-700 py-2 rounded-lg font-bold">Shop Now</button>
+            <section class="section vision" id="vision">
+                <div class="section-heading">
+                    <p class="eyebrow">Product vision</p>
+                    <h2>Start with connection. Grow into enablement. Expand into intelligence.</h2>
+                    <p>
+                        FarmConnecta is a neutral infrastructure layer for agriculture. Instead of
+                        replacing existing actors, the platform helps them find one another,
+                        coordinate work, and build trust in a shared digital system.
+                    </p>
                 </div>
-                <div class="section-bg p-6 border-t-4 border-green-500">
-                    <span class="text-3xl">🧪</span>
-                    <h3 class="font-bold text-xl mt-2">Agro-Chemicals</h3>
-                    <p class="text-sm text-gray-500 mb-4">Fertilizers & Pesticides.</p>
-                    <button onclick="alert('Store opening soon!')" class="w-full bg-green-50 text-green-700 py-2 rounded-lg font-bold">Shop Now</button>
-                </div>
-                <div class="section-bg p-6 border-t-4 border-orange-500">
-                    <span class="text-3xl">🚜</span>
-                    <h3 class="font-bold text-xl mt-2">Equipment</h3>
-                    <p class="text-sm text-gray-500 mb-4">Tractors & Tools for hire.</p>
-                    <button onclick="alert('Store opening soon!')" class="w-full bg-orange-50 text-orange-700 py-2 rounded-lg font-bold">Browse Catalog</button>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <!-- List Produce Modal -->
-    <div id="list-modal" class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-6">List Your Produce</h3>
-            <form id="produce-form" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-bold mb-1">Item Name</label>
-                    <input type="text" id="p-name" placeholder="e.g. Yellow Maize" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+                <div class="phase-grid">
+                    <article class="phase-card active">
+                        <p class="phase-tag">Phase 1</p>
+                        <h3>Connection</h3>
+                        <ul>
+                            <li>Role-based onboarding and user profiles</li>
+                            <li>Farm product listings and discovery</li>
+                            <li>Job marketplace and worker matching</li>
+                            <li>Service provider and logistics directories</li>
+                            <li>Messaging, coordination, and moderation</li>
+                        </ul>
+                        <p class="phase-note">No payments. No automation. Just strong digital connections that work.</p>
+                    </article>
+
+                    <article class="phase-card">
+                        <p class="phase-tag">Phase 2</p>
+                        <h3>Enablement</h3>
+                        <ul>
+                            <li>Verified profiles and trust signals</li>
+                            <li>Ratings, reputation, and structured workflows</li>
+                            <li>Enterprise tools for agricultural organizations</li>
+                            <li>Data insights and operational reporting</li>
+                        </ul>
+                    </article>
+
+                    <article class="phase-card">
+                        <p class="phase-tag">Phase 3</p>
+                        <h3>Intelligence &amp; Scale</h3>
+                        <ul>
+                            <li>Transactions and financing rails</li>
+                            <li>Market intelligence and analytics</li>
+                            <li>APIs, integrations, and partner systems</li>
+                            <li>Cross-border expansion across Africa</li>
+                        </ul>
+                    </article>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-bold mb-1">Price (NGN)</label>
-                        <input type="number" id="p-price" placeholder="5000" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+            </section>
+
+            <section class="section marketplace" id="marketplace">
+                <div class="section-heading">
+                    <p class="eyebrow">Marketplace preview</p>
+                    <h2>A public marketplace structured around how agricultural ecosystems really work.</h2>
+                    <p>
+                        The website should showcase how FarmConnecta organizes supply, labor, services,
+                        and transport without turning the public homepage into the full product app.
+                    </p>
+                </div>
+
+                <div class="market-tabs" role="tablist" aria-label="Marketplace categories">
+                    <button class="market-tab is-active" type="button" data-target="products">Products</button>
+                    <button class="market-tab" type="button" data-target="jobs">Jobs</button>
+                    <button class="market-tab" type="button" data-target="services">Services</button>
+                    <button class="market-tab" type="button" data-target="logistics">Logistics</button>
+                </div>
+
+                <div class="market-panels">
+                    <section class="market-panel is-active" data-panel="products">
+                        <div class="market-copy">
+                            <h3>Farm product discovery</h3>
+                            <p>
+                                Buyers and agribusinesses can browse crops and produce by category,
+                                location, harvest timing, and seller quality signals.
+                            </p>
+                        </div>
+                        <div class="listing-grid" id="product-listings"></div>
+                    </section>
+
+                    <section class="market-panel" data-panel="jobs">
+                        <div class="market-copy">
+                            <h3>Jobs and worker opportunities</h3>
+                            <p>
+                                Farmers, cooperatives, and agribusinesses can publish roles while
+                                workers and job seekers discover relevant opportunities by skills and location.
+                            </p>
+                        </div>
+                        <div class="listing-grid" id="job-listings"></div>
+                    </section>
+
+                    <section class="market-panel" data-panel="services">
+                        <div class="market-copy">
+                            <h3>Service provider directory</h3>
+                            <p>
+                                Agronomists, veterinarians, input suppliers, and field specialists
+                                get a focused space where their expertise is easy to find and compare.
+                            </p>
+                        </div>
+                        <div class="listing-grid" id="service-listings"></div>
+                    </section>
+
+                    <section class="market-panel" data-panel="logistics">
+                        <div class="market-copy">
+                            <h3>Logistics and transport access</h3>
+                            <p>
+                                Producers and buyers can discover transport operators, aggregation support,
+                                and cold-chain options before advanced workflow automation is introduced.
+                            </p>
+                        </div>
+                        <div class="listing-grid" id="logistics-listings"></div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="section roles" id="roles">
+                <div class="section-heading">
+                    <p class="eyebrow">Role-based pathways</p>
+                    <h2>Each user enters through a path that matches their goals.</h2>
+                    <p>
+                        This is one of the strongest parts of the FarmConnecta vision. Farmers,
+                        buyers, workers, experts, logistics operators, and finance partners should
+                        all feel that the product understands how they work.
+                    </p>
+                </div>
+
+                <div class="role-grid">
+                    <article>
+                        <h3>Farmers &amp; producers</h3>
+                        <p>Create a profile, list products, request services, hire workers, and find transport.</p>
+                    </article>
+                    <article>
+                        <h3>Buyers &amp; agribusinesses</h3>
+                        <p>Discover supply, compare sellers, coordinate sourcing, and post jobs or service requests.</p>
+                    </article>
+                    <article>
+                        <h3>Workers &amp; job seekers</h3>
+                        <p>Show work history, indicate availability, and apply for opportunities across regions.</p>
+                    </article>
+                    <article>
+                        <h3>Agronomists &amp; veterinarians</h3>
+                        <p>Present expertise, service areas, pricing cues, and availability for field support.</p>
+                    </article>
+                    <article>
+                        <h3>Logistics providers</h3>
+                        <p>Show routes, vehicle types, capacity, and operational coverage to attract demand.</p>
+                    </article>
+                    <article>
+                        <h3>Investors &amp; finance institutions</h3>
+                        <p>Understand ecosystem activity now and connect to stronger structured products later.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section architecture">
+                <div class="section-heading">
+                    <p class="eyebrow">Website structure</p>
+                    <h2>A clean public website now, with room to connect to the full app later.</h2>
+                    <p>
+                        The public website should establish trust, communicate the ecosystem, and
+                        guide people into the right next step while the deeper product lives in the app repos.
+                    </p>
+                </div>
+
+                <div class="architecture-grid">
+                    <article>
+                        <h3>Public pages</h3>
+                        <p>Home, marketplace overview, about, role pages, contact, and partner or investor pages.</p>
+                    </article>
+                    <article>
+                        <h3>Lead capture</h3>
+                        <p>WhatsApp, Telegram, email, interest forms, and onboarding funnels for different audiences.</p>
+                    </article>
+                    <article>
+                        <h3>Marketplace preview</h3>
+                        <p>Products, jobs, services, and logistics previews that point toward the live application.</p>
+                    </article>
+                    <article>
+                        <h3>Governance layer</h3>
+                        <p>Moderation, verification roadmap, and engineering governance messaging for trust.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section governance">
+                <div class="section-heading">
+                    <p class="eyebrow">Governance &amp; security</p>
+                    <h2>Built for sustainability, operational discipline, and investor confidence.</h2>
+                    <p>
+                        FarmConnecta follows strong engineering governance with organization-owned repositories,
+                        role-based access control, protected branches, code review standards, CI/CD enforcement,
+                        and no direct production access for contractors.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section community" id="community">
+                <div class="community-panel">
+                    <div class="community-copy">
+                        <p class="eyebrow">Community and contact</p>
+                        <h2>Use WhatsApp for direct conversations and Telegram for ecosystem momentum.</h2>
+                        <p>
+                            WhatsApp works best for quick support, seller contact, and partnership conversations.
+                            Telegram works best for community updates, ecosystem discussions, and FarmConnecta news.
+                        </p>
                     </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-1">Quantity</label>
-                        <input type="text" id="p-qty" placeholder="100kg" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
+
+                    <div class="community-actions">
+                        <a
+                            id="whatsapp-link"
+                            class="button button-whatsapp"
+                            href="#"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Connect on WhatsApp
+                        </a>
+                        <a
+                            id="telegram-link"
+                            class="button button-telegram"
+                            href="#"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Join Telegram Community
+                        </a>
                     </div>
+
+                    <p class="community-note">
+                        Replace the WhatsApp number and Telegram handle in the JavaScript file with your official channels before launch.
+                    </p>
                 </div>
-                <div>
-                    <label class="block text-sm font-bold mb-1">Location</label>
-                    <input type="text" id="p-loc" placeholder="Kano, Nigeria" class="w-full p-3 bg-gray-50 rounded-xl border border-gray-200" required>
-                </div>
-                <div class="flex gap-3 pt-4">
-                    <button type="button" onclick="toggleModal('list-modal')" class="flex-1 py-3 font-bold text-gray-500">Cancel</button>
-                    <button type="submit" class="flex-1 py-3 bg-green-700 text-white rounded-xl font-bold shadow-lg">Post Listing</button>
-                </div>
-            </form>
-        </div>
+            </section>
+        </main>
     </div>
 
-    <script type="module">
-        const firebaseConfig = {
-            apiKey: "AIzaSyAj6IgYNndFQqEZVUplg99gLZnNiJJ9I_Y",
-            authDomain: "farmconnecta-6c1f0.firebaseapp.com",
-            projectId: "farmconnecta-6c1f0",
-            storageBucket: "farmconnecta-6c1f0.firebasestorage.app",
-            messagingSenderId: "211167581489",
-            appId: "1:211167581489:web:b0a264e0500a21c16d0c10",
-            measurementId: "G-CFGJ35YLE6"
-        };
+    <footer class="site-footer">
+        <div>
+            <strong>FarmConnecta</strong>
+            <p>The foundation for a connected, inclusive, and data-driven agricultural economy across Africa.</p>
+        </div>
+        <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="partners.html">Partners</a>
+            <a href="contact.html">Contact</a>
+            <a href="mailto:tech@farmconnecta.com">tech@farmconnecta.com</a>
+            <a href="https://farmconnecta.com" target="_blank" rel="noreferrer">farmconnecta.com</a>
+        </div>
+    </footer>
 
-        const { fb } = window;
-        const appId = 'farmconnecta-v1';
-        let db, auth, user;
-
-        window.toggleModal = (id) => document.getElementById(id).classList.toggle('hidden');
-
-        async function init() {
-            if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "") {
-                renderMocks();
-                return;
-            }
-
-            try {
-                const app = fb.initializeApp(firebaseConfig);
-                db = fb.getFirestore(app);
-                auth = fb.getAuth(app);
-
-                fb.onAuthStateChanged(auth, (u) => {
-                    user = u;
-                    if (u) {
-                        document.getElementById('user-badge').textContent = `ID: ${u.uid.substring(0,6)}...`;
-                        listenToMarketplace();
-                    } else {
-                        fb.signInAnonymously(auth).catch(err => {
-                            console.error("Auth Error:", err);
-                            renderMocks("Auth failed. Check Firebase console.");
-                        });
-                    }
-                });
-            } catch (err) {
-                console.error("Firebase Init Error:", err);
-                renderMocks("Connection Error. Check your Config keys.");
-            }
-        }
-
-        function listenToMarketplace() {
-            const path = `artifacts/${appId}/public/data/listings`;
-            const q = fb.query(fb.collection(db, path));
-
-            fb.onSnapshot(q, (snapshot) => {
-                const container = document.getElementById('marketplace-grid');
-                if (snapshot.empty) {
-                    container.innerHTML = `<div class="col-span-full text-center py-10 bg-white rounded-2xl border-2 border-dashed border-gray-100 text-gray-400">No live listings yet. Be the first to post!</div>`;
-                    return;
-                }
-
-                container.innerHTML = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    return `
-                        <div class="section-bg p-6 hover:shadow-xl transition group border border-transparent hover:border-green-100">
-                            <div class="h-32 bg-green-50 rounded-xl mb-4 flex items-center justify-center text-4xl group-hover:scale-105 transition">📦</div>
-                            <h3 class="font-bold text-green-900">${data.name}</h3>
-                            <p class="text-green-600 font-black mt-1">${Number(data.price).toLocaleString()} NGN <span class="text-xs text-gray-400">/${data.qty}</span></p>
-                            <div class="flex items-center text-[10px] uppercase tracking-wider text-gray-400 font-bold mt-3">
-                                <span class="mr-2">📍 ${data.location}</span>
-                            </div>
-                            <button class="w-full mt-4 py-2 bg-green-100 text-green-800 rounded-lg text-sm font-bold hover:bg-green-700 hover:text-white transition">Buy Now</button>
-                        </div>
-                    `;
-                }).join('');
-            }, (err) => {
-                console.error("Firestore Error:", err);
-                if (err.code === 'permission-denied') {
-                    renderMocks("Permission Denied. Did you publish your Firestore Rules?");
-                }
-            });
-        }
-
-        document.getElementById('produce-form').onsubmit = async (e) => {
-            e.preventDefault();
-            if (!user) return alert("Please wait for secure connection...");
-
-            const btn = e.target.querySelector('button[type="submit"]');
-            btn.disabled = true;
-            btn.textContent = "Posting...";
-
-            try {
-                const path = `artifacts/${appId}/public/data/listings`;
-                await fb.addDoc(fb.collection(db, path), {
-                    name: document.getElementById('p-name').value,
-                    price: document.getElementById('p-price').value,
-                    qty: document.getElementById('p-qty').value,
-                    location: document.getElementById('p-loc').value,
-                    userId: user.uid,
-                    createdAt: fb.serverTimestamp()
-                });
-                
-                e.target.reset();
-                toggleModal('list-modal');
-            } catch (err) {
-                alert("Error posting listing. Check your Firestore Rules.");
-                console.error(err);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = "Post Listing";
-            }
-        };
-
-        function renderMocks(reason = "Firebase Config Missing") {
-            document.getElementById('user-badge').textContent = "Demo Mode";
-            document.getElementById('marketplace-grid').innerHTML = `
-                <div class="col-span-full p-6 bg-amber-50 text-amber-800 rounded-xl text-sm mb-4 border border-amber-200">
-                    <div class="flex items-center">
-                        <span class="text-xl mr-3">⚠️</span>
-                        <div>
-                            <p class="font-bold">App is in Demo Mode</p>
-                            <p class="opacity-80">${reason}. To go live, add your keys to the code.</p>
-                        </div>
-                    </div>
-                </div>
-                ${[1,2,3,4].map(() => `
-                    <div class="section-bg p-6 opacity-60 grayscale">
-                        <div class="h-32 bg-gray-100 rounded-xl mb-4"></div>
-                        <div class="h-4 bg-gray-200 w-3/4 mb-2"></div>
-                        <div class="h-4 bg-gray-200 w-1/2"></div>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        window.onload = init;
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
