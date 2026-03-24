@@ -93,8 +93,63 @@
                     </article>
                     <article>
                         <h3>Investors and supporters</h3>
-                        <p>Contact us if you want to explore FarmConnecta’s long-term model, market opportunity, and growth pathway.</p>
+                        <p>Contact us if you want to explore FarmConnecta's long-term model, market opportunity, and growth pathway.</p>
                     </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-heading">
+                    <p class="eyebrow">Send a message</p>
+                    <h2>Share who you are, what you are exploring, and how we should follow up.</h2>
+                    <p>
+                        This form prepares an email draft so outreach stays simple even on a static website.
+                        It is a practical launch-ready step until we add a server-backed contact workflow.
+                    </p>
+                </div>
+
+                <div class="contact-form-panel">
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-grid">
+                            <label class="form-field">
+                                <span>Name</span>
+                                <input type="text" name="name" placeholder="Your full name" required>
+                            </label>
+                            <label class="form-field">
+                                <span>Email</span>
+                                <input type="email" name="email" placeholder="you@example.com" required>
+                            </label>
+                        </div>
+
+                        <div class="form-grid">
+                            <label class="form-field">
+                                <span>Category</span>
+                                <select name="category" required>
+                                    <option value="">Select a collaboration type</option>
+                                    <option value="Developer or contributor">Developer or contributor</option>
+                                    <option value="Strategic partner">Strategic partner</option>
+                                    <option value="Ecosystem builder">Ecosystem builder</option>
+                                    <option value="Investor or supporter">Investor or supporter</option>
+                                </select>
+                            </label>
+                            <label class="form-field">
+                                <span>Organization</span>
+                                <input type="text" name="organization" placeholder="Company, network, or project">
+                            </label>
+                        </div>
+
+                        <label class="form-field">
+                            <span>Message</span>
+                            <textarea name="message" rows="6" placeholder="Tell FarmConnecta what you are exploring and the best next step." required></textarea>
+                        </label>
+
+                        <div class="form-actions">
+                            <button class="button button-primary" type="submit">Prepare Email</button>
+                            <p id="form-status" class="form-status" aria-live="polite">
+                                Submitting opens your email app with a prefilled message to tech@farmconnecta.com.
+                            </p>
+                        </div>
+                    </form>
                 </div>
             </section>
 

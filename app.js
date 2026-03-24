@@ -104,6 +104,8 @@ const tabs = document.querySelectorAll(".market-tab");
 const panels = document.querySelectorAll(".market-panel");
 const menuToggle = document.querySelector(".menu-toggle");
 const siteHeader = document.querySelector(".site-header");
+const contactForm = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
 
 function setActivePageLink() {
     if (!currentPage) return;
@@ -122,6 +124,47 @@ function initMobileMenu() {
     menuToggle.addEventListener("click", () => {
         const isOpen = siteHeader.classList.toggle("is-open");
         menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.querySelectorAll(".site-nav a").forEach((link) => {
+        link.addEventListener("click", () => {
+            siteHeader.classList.remove("is-open");
+            menuToggle.setAttribute("aria-expanded", "false");
+        });
+    });
+}
+
+function initContactForm() {
+    if (!contactForm) return;
+
+    contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const name = (formData.get("name") || "").toString().trim();
+        const email = (formData.get("email") || "").toString().trim();
+        const category = (formData.get("category") || "").toString().trim();
+        const organization = (formData.get("organization") || "").toString().trim();
+        const message = (formData.get("message") || "").toString().trim();
+
+        const subject = encodeURIComponent(`FarmConnecta website inquiry: ${category || "General contact"}`);
+        const body = encodeURIComponent(
+            [
+                `Name: ${name}`,
+                `Email: ${email}`,
+                `Category: ${category}`,
+                `Organization: ${organization || "Not provided"}`,
+                "",
+                "Message:",
+                message
+            ].join("\n")
+        );
+
+        if (formStatus) {
+            formStatus.textContent = "Opening your email app with a prefilled message to FarmConnecta.";
+        }
+
+        window.location.href = `mailto:tech@farmconnecta.com?subject=${subject}&body=${body}`;
     });
 }
 
@@ -173,6 +216,7 @@ function hydrateCommunityLinks() {
 
 setActivePageLink();
 initMobileMenu();
+initContactForm();
 renderListings("product-listings", listings.products);
 renderListings("job-listings", listings.jobs);
 renderListings("service-listings", listings.services);
