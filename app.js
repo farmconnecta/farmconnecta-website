@@ -98,8 +98,32 @@ const communityLinks = {
     telegram: "https://t.me/farmconnecta"
 };
 
+const currentScript = document.currentScript;
+const currentPage = currentScript ? currentScript.dataset.page : "";
 const tabs = document.querySelectorAll(".market-tab");
 const panels = document.querySelectorAll(".market-panel");
+const menuToggle = document.querySelector(".menu-toggle");
+const siteHeader = document.querySelector(".site-header");
+
+function setActivePageLink() {
+    if (!currentPage) return;
+
+    const activeLink = document.querySelector(`[data-nav="${currentPage}"]`);
+
+    if (activeLink) {
+        activeLink.classList.add("is-current");
+        activeLink.setAttribute("aria-current", "page");
+    }
+}
+
+function initMobileMenu() {
+    if (!menuToggle || !siteHeader) return;
+
+    menuToggle.addEventListener("click", () => {
+        const isOpen = siteHeader.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+}
 
 function renderListings(targetId, items) {
     const container = document.getElementById(targetId);
@@ -147,6 +171,8 @@ function hydrateCommunityLinks() {
     }
 }
 
+setActivePageLink();
+initMobileMenu();
 renderListings("product-listings", listings.products);
 renderListings("job-listings", listings.jobs);
 renderListings("service-listings", listings.services);

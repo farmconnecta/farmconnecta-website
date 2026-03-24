@@ -119,6 +119,10 @@ button {
     font-weight: 600;
 }
 
+.site-nav a.is-current {
+    color: var(--green-deep);
+}
+
 .button,
 .market-tab {
     display: inline-flex;
@@ -157,6 +161,11 @@ button {
 .button-telegram {
     background: #2086d7;
     color: #fff;
+}
+
+.menu-toggle,
+.sr-only {
+    display: none;
 }
 
 .hero {
@@ -330,6 +339,10 @@ button {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.phase-grid-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .phase-card,
 .role-grid article,
 .architecture-grid article {
@@ -361,6 +374,12 @@ button {
     margin-top: 16px;
     font-weight: 700;
     color: var(--green-deep);
+}
+
+.phase-copy {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
 }
 
 .market-tabs {
@@ -534,11 +553,62 @@ button {
 
     .site-header {
         padding: 16px;
+        border-radius: 28px;
     }
 
     .header-actions,
     .site-nav {
         width: 100%;
+    }
+
+    .menu-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 48px;
+        height: 48px;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        padding: 0;
+    }
+
+    .menu-toggle span {
+        width: 18px;
+        height: 2px;
+        background: var(--text);
+        border-radius: 999px;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .site-nav,
+    .header-actions {
+        display: none;
+    }
+
+    .site-header.is-open .site-nav,
+    .site-header.is-open .header-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .site-header.is-open .site-nav a {
+        width: 100%;
+        padding: 12px 0;
     }
 
     .header-actions .button,
@@ -560,7 +630,8 @@ button {
     .listing-grid,
     .role-grid,
     .architecture-grid,
-    .phase-grid {
+    .phase-grid,
+    .phase-grid-two {
         grid-template-columns: 1fr;
     }
 

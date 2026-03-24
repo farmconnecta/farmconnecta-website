@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | FarmConnecta</title>
+    <meta
+        name="description"
+        content="Explore FarmConnecta's public marketplace structure for products, jobs, services, and logistics across Africa's agricultural economy."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="FarmConnecta home">
+                <span class="brand-mark">FC</span>
+                <span class="brand-copy">
+                    <strong>FarmConnecta</strong>
+                    <span>Africa-first agri-tech ecosystem</span>
+                </span>
+            </a>
+
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+
+            <nav class="site-nav" id="primary-nav" aria-label="Primary">
+                <a href="index.html" data-nav="home">Home</a>
+                <a href="marketplace.html" data-nav="marketplace">Marketplace</a>
+                <a href="about.html" data-nav="about">About</a>
+                <a href="partners.html" data-nav="partners">Partners</a>
+                <a href="contact.html" data-nav="contact">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <a class="button button-secondary" href="contact.html">Request Access</a>
+                <a class="button button-primary" href="#market-sections">Browse Categories</a>
+            </div>
+        </header>
+
+        <main id="top">
+            <section class="hero hero-compact">
+                <div class="hero-copy">
+                    <p class="eyebrow">Marketplace</p>
+                    <h1>One discovery layer for supply, labor, services, and logistics.</h1>
+                    <p class="hero-text">
+                        The FarmConnecta marketplace is designed around the realities of agriculture,
+                        not generic classifieds. It helps users move from fragmented searching to
+                        clearer discovery, better coordination, and stronger trust signals.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#market-sections">Browse marketplace lanes</a>
+                        <a class="button button-ghost" href="contact.html">Get involved</a>
+                    </div>
+                </div>
+
+                <div class="hero-panel">
+                    <div class="hero-card hero-card-primary">
+                        <p class="card-label">Marketplace design principles</p>
+                        <div class="metric-grid">
+                            <article>
+                                <strong>Role</strong>
+                                <span>specific entry points</span>
+                            </article>
+                            <article>
+                                <strong>Trust</strong>
+                                <span>before transaction depth</span>
+                            </article>
+                            <article>
+                                <strong>Moderation</strong>
+                                <span>for healthier discovery</span>
+                            </article>
+                            <article>
+                                <strong>Scale</strong>
+                                <span>ready for future workflows</span>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="market-sections">
+                <div class="section-heading">
+                    <p class="eyebrow">Marketplace lanes</p>
+                    <h2>Each discovery lane solves a different coordination problem.</h2>
+                    <p>
+                        Rather than placing everything into one generic feed, FarmConnecta separates the
+                        public marketplace into distinct lanes for products, jobs, services, and logistics.
+                    </p>
+                </div>
+
+                <div class="phase-grid phase-grid-two">
+                    <article class="phase-card">
+                        <p class="phase-tag">Products</p>
+                        <h3>Supply discovery</h3>
+                        <p class="phase-copy">Crop and produce listings with category, location, timing, and seller visibility.</p>
+                    </article>
+                    <article class="phase-card">
+                        <p class="phase-tag">Jobs</p>
+                        <h3>Labor coordination</h3>
+                        <p class="phase-copy">Agricultural roles, seasonal work, and field opportunities aligned to skills and geography.</p>
+                    </article>
+                    <article class="phase-card">
+                        <p class="phase-tag">Services</p>
+                        <h3>Expert support</h3>
+                        <p class="phase-copy">Agronomists, veterinarians, mechanization providers, and field specialists.</p>
+                    </article>
+                    <article class="phase-card">
+                        <p class="phase-tag">Logistics</p>
+                        <h3>Movement and delivery</h3>
+                        <p class="phase-copy">Transport, aggregation, and cold-chain support for getting outputs where they need to go.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section marketplace">
+                <div class="section-heading">
+                    <p class="eyebrow">Preview listings</p>
+                    <h2>A public view of the marketplace structure.</h2>
+                    <p>
+                        These preview cards show how the marketplace can present activity without exposing
+                        the full application experience on the public website.
+                    </p>
+                </div>
+
+                <div class="market-tabs" role="tablist" aria-label="Marketplace categories">
+                    <button class="market-tab is-active" type="button" data-target="products">Products</button>
+                    <button class="market-tab" type="button" data-target="jobs">Jobs</button>
+                    <button class="market-tab" type="button" data-target="services">Services</button>
+                    <button class="market-tab" type="button" data-target="logistics">Logistics</button>
+                </div>
+
+                <div class="market-panels">
+                    <section class="market-panel is-active" data-panel="products">
+                        <div class="market-copy">
+                            <h3>Products ready for buyer discovery</h3>
+                            <p>Surface location, volume, harvest timing, and seller quality signals in one consistent format.</p>
+                        </div>
+                        <div class="listing-grid" id="product-listings"></div>
+                    </section>
+
+                    <section class="market-panel" data-panel="jobs">
+                        <div class="market-copy">
+                            <h3>Jobs and agricultural work opportunities</h3>
+                            <p>Make labor demand more visible while giving workers and job seekers a clearer way in.</p>
+                        </div>
+                        <div class="listing-grid" id="job-listings"></div>
+                    </section>
+
+                    <section class="market-panel" data-panel="services">
+                        <div class="market-copy">
+                            <h3>Service expertise with better discoverability</h3>
+                            <p>Show specialists by domain, availability, service area, and practical field relevance.</p>
+                        </div>
+                        <div class="listing-grid" id="service-listings"></div>
+                    </section>
+
+                    <section class="market-panel" data-panel="logistics">
+                        <div class="market-copy">
+                            <h3>Logistics support as part of the value chain</h3>
+                            <p>Transport and delivery capacity should be discoverable alongside supply, not treated as an afterthought.</p>
+                        </div>
+                        <div class="listing-grid" id="logistics-listings"></div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="community-panel">
+                    <div class="community-copy">
+                        <p class="eyebrow">Next step</p>
+                        <h2>Move from preview to participation.</h2>
+                        <p>
+                            As FarmConnecta evolves, this public marketplace can connect into the full app:
+                            onboarding, profiles, messaging, moderation, and stronger verification workflows.
+                        </p>
+                    </div>
+
+                    <div class="community-actions">
+                        <a class="button button-primary" href="contact.html">Contact FarmConnecta</a>
+                        <a id="whatsapp-link" class="button button-whatsapp" href="#" target="_blank" rel="noreferrer">WhatsApp</a>
+                        <a id="telegram-link" class="button button-telegram" href="#" target="_blank" rel="noreferrer">Telegram</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div>
+            <strong>FarmConnecta</strong>
+            <p>The foundation for a connected, inclusive, and data-driven agricultural economy across Africa.</p>
+        </div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="partners.html">Partners</a>
+            <a href="contact.html">Contact</a>
+            <a href="mailto:tech@farmconnecta.com">tech@farmconnecta.com</a>
+        </div>
+    </footer>
+
+    <script src="app.js" data-page="marketplace"></script>
+</body>
+</html>
