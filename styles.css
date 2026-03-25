@@ -566,6 +566,11 @@ button {
     gap: 20px;
 }
 
+.footer-meta {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
 .footer-links {
     flex-wrap: wrap;
     justify-content: flex-end;
