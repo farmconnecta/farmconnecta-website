@@ -93,6 +93,75 @@ const listings = {
     ]
 };
 
+const trustProofItems = [
+    {
+        title: "Built around real roles",
+        description: "Farmers, buyers, workers, service providers, logistics operators, and finance partners each have a visible place in the ecosystem."
+    },
+    {
+        title: "Structured marketplace lanes",
+        description: "Products, jobs, services, and logistics are separated so discovery feels intentional instead of noisy."
+    },
+    {
+        title: "Trust before transactions",
+        description: "The public experience focuses on visibility, moderation, and coordination before adding heavier workflow complexity."
+    }
+];
+
+const partnerCategories = [
+    "Farmers",
+    "Buyers",
+    "Workers",
+    "Agronomists",
+    "Logistics",
+    "Partners"
+];
+
+const audiencePaths = [
+    {
+        title: "I am a farmer or producer",
+        description: "Show what you grow, discover buyers, and find workers, services, or transport support.",
+        ctaLabel: "Explore the marketplace",
+        href: "marketplace.html"
+    },
+    {
+        title: "I am a buyer or agribusiness",
+        description: "Browse supply opportunities and connect with producers, service providers, and logistics operators.",
+        ctaLabel: "Browse supply lanes",
+        href: "marketplace.html"
+    },
+    {
+        title: "I am looking for work or services",
+        description: "See how FarmConnecta makes agricultural opportunities and expert support easier to discover.",
+        ctaLabel: "View opportunity preview",
+        href: "marketplace.html"
+    },
+    {
+        title: "I want to partner with FarmConnecta",
+        description: "Start a conversation about strategic partnerships, ecosystem collaboration, or long-term platform support.",
+        ctaLabel: "Contact FarmConnecta",
+        href: "contact.html"
+    }
+];
+
+const demoSteps = [
+    {
+        step: "1",
+        title: "Create a role-based profile",
+        description: "A participant enters through the path that matches how they work in the agricultural economy."
+    },
+    {
+        step: "2",
+        title: "Publish or discover listings",
+        description: "Products, jobs, services, and logistics become visible in structured marketplace lanes."
+    },
+    {
+        step: "3",
+        title: "Coordinate with confidence",
+        description: "Messaging, moderation, and clearer profiles help users move from discovery into real conversations."
+    }
+];
+
 const communityLinks = {
     whatsapp: "https://wa.me/998999968085?text=Hello%20FarmConnecta%2C%20I%20would%20like%20to%20learn%20more.",
     telegram: "https://t.me/farmconnecta"
@@ -168,13 +237,19 @@ function initContactForm() {
     });
 }
 
-function renderListings(targetId, items) {
+function renderCards(targetId, items, renderer) {
     const container = document.getElementById(targetId);
     if (!container) return;
 
-    container.innerHTML = items
-        .map(
-            (item) => `
+    container.innerHTML = items.map(renderer).join("");
+}
+
+function renderListings(targetId, items) {
+    renderCards(
+        targetId,
+        items,
+        (item) =>
+            `
                 <article class="listing-card">
                     <span class="listing-type">${item.type}</span>
                     <h4>${item.title}</h4>
@@ -187,8 +262,56 @@ function renderListings(targetId, items) {
                     </div>
                 </article>
             `
-        )
-        .join("");
+    );
+}
+
+function renderTrustProof() {
+    renderCards(
+        "proof-grid",
+        trustProofItems,
+        (item) => `
+            <article class="info-card">
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+            </article>
+        `
+    );
+}
+
+function renderLogoStrip() {
+    renderCards(
+        "logo-strip",
+        partnerCategories,
+        (label) => `<span class="logo-pill">${label}</span>`
+    );
+}
+
+function renderAudiencePaths() {
+    renderCards(
+        "path-grid",
+        audiencePaths,
+        (item) => `
+            <article class="path-card">
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <a class="button button-secondary" href="${item.href}">${item.ctaLabel}</a>
+            </article>
+        `
+    );
+}
+
+function renderDemoSteps() {
+    renderCards(
+        "demo-grid",
+        demoSteps,
+        (item) => `
+            <article class="demo-card">
+                <span class="demo-step">Step ${item.step}</span>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+            </article>
+        `
+    );
 }
 
 function setActiveTab(target) {
@@ -221,6 +344,10 @@ renderListings("product-listings", listings.products);
 renderListings("job-listings", listings.jobs);
 renderListings("service-listings", listings.services);
 renderListings("logistics-listings", listings.logistics);
+renderTrustProof();
+renderLogoStrip();
+renderAudiencePaths();
+renderDemoSteps();
 hydrateCommunityLinks();
 
 tabs.forEach((tab) => {
